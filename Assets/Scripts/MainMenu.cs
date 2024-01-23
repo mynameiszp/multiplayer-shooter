@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class MainUI : MonoBehaviour, INetworkRunnerCallbacks
+public class MainMenu : MonoBehaviour, INetworkRunnerCallbacks
 {
     [SerializeField] private GameObject skinsPanel;
     private NetworkRunner _runner;
@@ -87,25 +87,8 @@ public class MainUI : MonoBehaviour, INetworkRunnerCallbacks
         }
     }
 
-    //public void OnEnable()
-    //{
-    //    _runner.AddCallbacks(this);
-    //}
-
-    //public void OnDisable()
-    //{
-    //    _runner.RemoveCallbacks(this);
-    //}
     public void OnInput(NetworkRunner runner, NetworkInput input)
     {
-        //var myInput = new NetworkInputData();
-
-        //myInput.buttons.Set(InputButtons.Forward, Input.GetKey(KeyCode.W));
-        //myInput.buttons.Set(InputButtons.Backward, Input.GetKey(KeyCode.S));
-        //myInput.buttons.Set(InputButtons.Left, Input.GetKey(KeyCode.A));
-        //myInput.buttons.Set(InputButtons.Right, Input.GetKey(KeyCode.D));
-
-        //input.Set(myInput);
         var data = new NetworkInputData();
 
         if (Input.GetKey(KeyCode.W))

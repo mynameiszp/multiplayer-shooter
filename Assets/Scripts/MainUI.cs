@@ -1,4 +1,5 @@
 using Fusion;
+using Fusion.Addons.Physics;
 using Fusion.Sockets;
 using System;
 using System.Collections;
@@ -16,6 +17,7 @@ public class MainUI : MonoBehaviour, INetworkRunnerCallbacks
         // Create the Fusion runner and let it know that we will be providing user input
         _runner = gameObject.AddComponent<NetworkRunner>();
         _runner.ProvideInput = true;
+        //gameObject.AddComponent<RunnerSimulatePhysics2D>();
 
         // Create the NetworkSceneInfo from the current scene
         var scene = SceneRef.FromIndex(SceneManager.GetActiveScene().buildIndex + 1);
@@ -38,7 +40,7 @@ public class MainUI : MonoBehaviour, INetworkRunnerCallbacks
     public void OnHost()
     {
         StartGame(GameMode.Host);
-    }    
+    }
     public void OnJoin()
     {
         StartGame(GameMode.Client);
@@ -84,24 +86,43 @@ public class MainUI : MonoBehaviour, INetworkRunnerCallbacks
             _spawnedCharacters.Remove(player);
         }
     }
+
+    //public void OnEnable()
+    //{
+    //    _runner.AddCallbacks(this);
+    //}
+
+    //public void OnDisable()
+    //{
+    //    _runner.RemoveCallbacks(this);
+    //}
     public void OnInput(NetworkRunner runner, NetworkInput input)
     {
+        //var myInput = new NetworkInputData();
+
+        //myInput.buttons.Set(InputButtons.Forward, Input.GetKey(KeyCode.W));
+        //myInput.buttons.Set(InputButtons.Backward, Input.GetKey(KeyCode.S));
+        //myInput.buttons.Set(InputButtons.Left, Input.GetKey(KeyCode.A));
+        //myInput.buttons.Set(InputButtons.Right, Input.GetKey(KeyCode.D));
+
+        //input.Set(myInput);
         var data = new NetworkInputData();
 
         if (Input.GetKey(KeyCode.W))
-            data.direction += Vector2.up;
+            data.aimDirection += Vector2.up;
 
         if (Input.GetKey(KeyCode.S))
-            data.direction += Vector2.down;
+            data.aimDirection += Vector2.down;
 
         if (Input.GetKey(KeyCode.A))
-            data.direction += Vector2.left;
+            data.aimDirection += Vector2.left;
 
         if (Input.GetKey(KeyCode.D))
-            data.direction += Vector2.right;
+            data.aimDirection += Vector2.right;
 
         input.Set(data);
     }
+
     public void OnInputMissing(NetworkRunner runner, PlayerRef player, NetworkInput input) { }
     public void OnShutdown(NetworkRunner runner, ShutdownReason shutdownReason) { }
     public void OnConnectedToServer(NetworkRunner runner) { }

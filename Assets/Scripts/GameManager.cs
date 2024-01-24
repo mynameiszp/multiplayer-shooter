@@ -1,3 +1,4 @@
+using Fusion;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -24,6 +25,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private float _skeletonHarm;
     [SerializeField] private float _skeletonAttackFrequency;
     [Space]
+    [SerializeField] private NetworkPrefabRef _bulletPrefab;
+    [Space]
     [Header("Weapons Characteristics")]
 
     [SerializeField] private WeaponData _gunData;
@@ -46,9 +49,13 @@ public class GameManager : MonoBehaviour
     //[SerializeField] private float _rifleAttackingEnemyNumber;
     private void Awake()
     {
-        _weaponManager.Init(new List<WeaponData>() { _gunData, _shotgunData, _rifleData });
+        _weaponManager.Init(_bulletPrefab, new List<WeaponData>() { _gunData, _shotgunData, _rifleData });
     }
-
+    private void Start()
+    {
+        Debug.Log("Start");
+        StartGame();
+    }
     public bool HasStartedGame {  get; set; }
     public void StartGame()
     {
@@ -58,4 +65,5 @@ public class GameManager : MonoBehaviour
     {
         HasStartedGame = false;
     }
+    
 }

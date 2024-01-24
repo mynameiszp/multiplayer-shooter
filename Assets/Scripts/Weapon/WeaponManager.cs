@@ -1,46 +1,65 @@
+using Fusion;
 using System.Collections;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using UnityEngine;
 
 public class WeaponManager : MonoBehaviour
 {
-    private GameObject hostWeapon;
-    private GameObject clientWeapon;
-    private List<GameObject> availableWeapons = new List<GameObject>();
+    private GameObject _hostWeapon;
+    private GameObject _clientWeapon;
+    public NetworkPrefabRef Bullet { get; set; }
+    private List<NetworkObject> weapons = new List<NetworkObject>();
+    private List<WeaponData> availableWeapons = new List<WeaponData>();
     public static WeaponManager Instance { get; private set; }
 
     private void Awake()
     {
-        if (Instance == null) Instance = this; //temporarys
+        if (Instance == null) Instance = this; //temporary
     }
 
-    public void Init(List<WeaponData> weaponDataList)
+    public void Init(NetworkPrefabRef bullet, List<WeaponData> weaponDataList)
     {
+        Bullet = bullet;
         WeaponData hostWeaponData = weaponDataList[Random.Range(0, weaponDataList.Count)];
         weaponDataList.Remove(hostWeaponData);
         WeaponData clientWeaponData = weaponDataList[Random.Range(0, weaponDataList.Count)];
-        hostWeapon = InstantiateWeapon(hostWeaponData);
-        hostWeapon.SetActive(false);
-        clientWeapon = InstantiateWeapon(clientWeaponData);
-        clientWeapon.SetActive(false);
-        availableWeapons.Add(hostWeapon);
-        availableWeapons.Add(clientWeapon);
+        //_hostWeapon = InstantiateWeapon(hostWeaponData);
+        //_hostWeapon.SetActive(false);
+        //_clientWeapon = InstantiateWeapon(clientWeaponData);
+        //_clientWeapon.SetActive(false);
+        availableWeapons.Add(hostWeaponData);
+        availableWeapons.Add(clientWeaponData);
+        //availableWeapons.AddRange(weapons);
     }
-    private GameObject InstantiateWeapon(WeaponData weaponData)
-    {
-        GameObject weapon = Instantiate(weaponData.prefab);
-        Weapon weaponComponent = weapon.GetComponent<Weapon>();
-        if (weaponComponent != null)
-        {
-            weaponComponent.Initialize(weaponData.attackDistance, weaponData.harm, weaponData.attackingEnemyNumber);
-        }
-        return weapon;
-    }
+    //private GameObject InstantiateWeapon(WeaponData weaponData)
+    //{
+    //    GameObject weapon = Instantiate(weaponData.prefab);
+    //    Weapon weaponComponent = weapon.GetComponent<Weapon>();
+    //    if (weaponComponent != null)
+    //    {
+    //        weaponComponent.Initialize(Bullet, weaponData.attackDistance, weaponData.harm, weaponData.attackingEnemyNumber);
+    //    }
+    //    return weapon;
+    //}
 
-    public GameObject GetWeapon()
+    public WeaponData GetWeapon()
     {
         var weapon = availableWeapons[0];
         availableWeapons.Remove(weapon);
         return weapon;
+    }    
+    public void AddWeaponToList(NetworkObject obj)
+    {
+        weapons.Add(obj);
+    }
+
+    public void StartPlayersAttack()
+    {
+        Debug.Log(weapons.Count);
+        foreach (var weapon in weapons)
+        {
+            weapon.GetComponent<Weapon>().Attack();
+        }
     }
 }

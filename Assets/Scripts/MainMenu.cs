@@ -7,9 +7,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class MainMenu : MonoBehaviour, INetworkRunnerCallbacks
+public class MainMenu : MonoBehaviour
 {
     [SerializeField] private GameObject skinsPanel;
+    private FixedJoystick _leftJoystick;
     private NetworkRunner _runner;
 
     async void StartGame(GameMode mode)
@@ -39,11 +40,11 @@ public class MainMenu : MonoBehaviour, INetworkRunnerCallbacks
 
     public void OnHost()
     {
-        StartGame(GameMode.Host);
+        SceneManager.LoadScene("Game");
     }
     public void OnJoin()
     {
-        StartGame(GameMode.Client);
+        SceneManager.LoadScene("Game");
     }
     private void Awake()
     {
@@ -89,19 +90,15 @@ public class MainMenu : MonoBehaviour, INetworkRunnerCallbacks
 
     public void OnInput(NetworkRunner runner, NetworkInput input)
     {
+        if (_leftJoystick == null)
+        {
+            return;
+        }
+
         var data = new NetworkInputData();
 
-        if (Input.GetKey(KeyCode.W))
-            data.aimDirection += Vector2.up;
+        data.aimDirection = _leftJoystick.Direction;
 
-        if (Input.GetKey(KeyCode.S))
-            data.aimDirection += Vector2.down;
-
-        if (Input.GetKey(KeyCode.A))
-            data.aimDirection += Vector2.left;
-
-        if (Input.GetKey(KeyCode.D))
-            data.aimDirection += Vector2.right;
 
         input.Set(data);
     }
@@ -123,4 +120,8 @@ public class MainMenu : MonoBehaviour, INetworkRunnerCallbacks
     public void OnReliableDataReceived(NetworkRunner runner, PlayerRef player, ReliableKey key, ArraySegment<byte> data) { }
     public void OnReliableDataProgress(NetworkRunner runner, PlayerRef player, ReliableKey key, float progress) { }
 
+    public void SetJoystik(FixedJoystick fixedJoystick)
+    {
+        _leftJoystick = fixedJoystick;
+    }
 }

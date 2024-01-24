@@ -46,14 +46,14 @@ public class GameManager : MonoBehaviour
     //[SerializeField] private float _rifleAttackingEnemyNumber;
     private void Awake()
     {
-        _weaponManager.SelectWeapon(new List<WeaponData>() { _gunData, _shotgunData, _rifleData });
+        _weaponManager.Init(new List<WeaponData>() { _gunData, _shotgunData, _rifleData });
     }
 
     public bool HasStartedGame {  get; set; }
     public void StartGame()
     {
         HasStartedGame = true;
-    }    
+    }
     public void FinishGame()
     {
         HasStartedGame = false;

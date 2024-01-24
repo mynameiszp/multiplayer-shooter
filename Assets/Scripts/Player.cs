@@ -3,12 +3,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Windows;
+using Zenject;
 
 public class Player : NetworkBehaviour
 {
-    public void Init(Vector3 forward)
+    //[Inject] 
+    private WeaponManager _weaponManager;
+
+    private void Start()
     {
-        GetComponent<Rigidbody>().velocity = forward;
+        _weaponManager = WeaponManager.Instance;
+        GameObject weapon = _weaponManager.GetWeapon();
+        weapon.SetActive(true);
+        weapon.transform.parent = gameObject.transform;
     }
 
     public override void FixedUpdateNetwork()
@@ -17,7 +24,7 @@ public class Player : NetworkBehaviour
         if (GetInput(out NetworkInputData data))
         {
             data.aimDirection.Normalize();
-            gameObject.transform.position += (Vector3) data.aimDirection * Runner.DeltaTime;
+            gameObject.transform.position += (Vector3)data.aimDirection * Runner.DeltaTime;
         }
     }
 }

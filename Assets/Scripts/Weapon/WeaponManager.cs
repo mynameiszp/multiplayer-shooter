@@ -6,23 +6,25 @@ public class WeaponManager : MonoBehaviour
 {
     private GameObject hostWeapon;
     private GameObject clientWeapon;
-    private Dictionary<GameObject, string> weapons;
-    [SerializeField] private float _gunAttackDistance;
-    [SerializeField] private float _gunHarm;
-    [SerializeField] private float _gunAttackingEnemyNumber;
-    [SerializeField] private float _shotgunAttackDistance;
-    [SerializeField] private float _shotgunHarm;
-    [SerializeField] private float _shotgunAttackingEnemyNumber;
-    [SerializeField] private float _rifleAttackDistance;
-    [SerializeField] private float _rifleHarm;
-    [SerializeField] private float _rifleAttackingEnemyNumber;
-    public void SelectWeapon(List<WeaponData> weaponDataList)
+    private List<GameObject> availableWeapons = new List<GameObject>();
+    public static WeaponManager Instance { get; private set; }
+
+    private void Awake()
+    {
+        if (Instance == null) Instance = this; //temporarys
+    }
+
+    public void Init(List<WeaponData> weaponDataList)
     {
         WeaponData hostWeaponData = weaponDataList[Random.Range(0, weaponDataList.Count)];
         weaponDataList.Remove(hostWeaponData);
         WeaponData clientWeaponData = weaponDataList[Random.Range(0, weaponDataList.Count)];
         hostWeapon = InstantiateWeapon(hostWeaponData);
+        hostWeapon.SetActive(false);
         clientWeapon = InstantiateWeapon(clientWeaponData);
+        clientWeapon.SetActive(false);
+        availableWeapons.Add(hostWeapon);
+        availableWeapons.Add(clientWeapon);
     }
     private GameObject InstantiateWeapon(WeaponData weaponData)
     {
@@ -32,6 +34,13 @@ public class WeaponManager : MonoBehaviour
         {
             weaponComponent.Initialize(weaponData.attackDistance, weaponData.harm, weaponData.attackingEnemyNumber);
         }
+        return weapon;
+    }
+
+    public GameObject GetWeapon()
+    {
+        var weapon = availableWeapons[0];
+        availableWeapons.Remove(weapon);
         return weapon;
     }
 }

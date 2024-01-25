@@ -65,10 +65,11 @@ public class NetworkManager : MonoBehaviour, INetworkRunnerCallbacks
 
     public void OnInput(NetworkRunner runner, NetworkInput input)
     {
-        var data = new NetworkInputData();
-
-        data.aimDirection = _moveJoystick.Direction;
-
+        var data = new NetworkInputData()
+        {
+            direction = _moveJoystick.Direction,
+            aim = _shotJoystick.Direction
+        };
         input.Set(data);
     }
 

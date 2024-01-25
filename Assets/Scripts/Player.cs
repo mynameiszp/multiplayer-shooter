@@ -19,8 +19,14 @@ public class Player : NetworkBehaviour
     {
         _weaponManager = WeaponManager.Instance;
         WeaponData weaponData = _weaponManager.GetWeapon();
+
+        Debug.Log(weaponData.attackingEnemyNumber);
+
         NetworkObject weapon = Runner.Spawn(weaponData.prefab);
         weapon.transform.parent = gameObject.transform;
+
+        Debug.Log(weapon.transform.parent);
+
         _weaponManager.AddWeaponToList(weapon);
         weapon.GetComponent<Weapon>().Initialize(_weaponManager.Bullet, weaponData.attackDistance, weaponData.harm, weaponData.attackingEnemyNumber);
     }
@@ -29,8 +35,8 @@ public class Player : NetworkBehaviour
         if (!HasStateAuthority) return;
         if (GetInput(out NetworkInputData data))
         {
-            data.aimDirection.Normalize();
-            gameObject.transform.position += (Vector3)data.aimDirection * Runner.DeltaTime;
+            data.direction.Normalize();
+            gameObject.transform.position += (Vector3)data.direction * Runner.DeltaTime;
         }
     }
 }

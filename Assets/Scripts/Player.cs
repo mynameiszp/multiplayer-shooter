@@ -8,27 +8,22 @@ using Zenject.SpaceFighter;
 
 public class Player : NetworkBehaviour
 {
+    [SerializeField] private float speed = 3f;
     //[Inject] 
     private WeaponManager _weaponManager;
+    private NetworkObject _weapon;
     public override void Spawned()
     {
         ConfigureWeapon();
-        _weaponManager.StartPlayersAttack(); //not now
     }
     private void ConfigureWeapon()
     {
         _weaponManager = WeaponManager.Instance;
         WeaponData weaponData = _weaponManager.GetWeapon();
-
-        Debug.Log(weaponData.attackingEnemyNumber);
-
-        NetworkObject weapon = Runner.Spawn(weaponData.prefab);
-        weapon.transform.parent = gameObject.transform;
-
-        Debug.Log(weapon.transform.parent);
-
-        _weaponManager.AddWeaponToList(weapon);
-        weapon.GetComponent<Weapon>().Initialize(_weaponManager.Bullet, weaponData.attackDistance, weaponData.harm, weaponData.attackingEnemyNumber);
+        _weapon = Runner.Spawn(weaponData.prefab);
+        _weapon.transform.parent = gameObject.transform;
+        _weaponManager.AddWeaponToList(_weapon);
+        _weapon.GetComponent<Weapon>().Initialize(_weaponManager.Bullet, weaponData.attackDistance, weaponData.harm, weaponData.attackingEnemyNumber);
     }
     public override void FixedUpdateNetwork()
     {
@@ -36,7 +31,8 @@ public class Player : NetworkBehaviour
         if (GetInput(out NetworkInputData data))
         {
             data.direction.Normalize();
-            gameObject.transform.position += (Vector3)data.direction * Runner.DeltaTime;
+            gameObject.transform.position += (Vector3)data.direction * Runner.DeltaTime * speed;
+            _weaponManager.StartPlayersAttack(_weapon, data.aim); //not now
         }
     }
 }

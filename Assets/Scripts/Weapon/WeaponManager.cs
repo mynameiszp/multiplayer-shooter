@@ -34,13 +34,13 @@ public class WeaponManager : MonoBehaviour
     }
     //private GameObject InstantiateWeapon(WeaponData weaponData)
     //{
-    //    GameObject weapon = Instantiate(weaponData.prefab);
-    //    Weapon weaponComponent = weapon.GetComponent<Weapon>();
+    //    GameObject _weapon = Instantiate(weaponData.prefab);
+    //    Weapon weaponComponent = _weapon.GetComponent<Weapon>();
     //    if (weaponComponent != null)
     //    {
     //        weaponComponent.Initialize(Bullet, weaponData.attackDistance, weaponData.harm, weaponData.attackingEnemyNumber);
     //    }
-    //    return weapon;
+    //    return _weapon;
     //}
 
     public WeaponData GetWeapon()
@@ -54,12 +54,11 @@ public class WeaponManager : MonoBehaviour
         weapons.Add(obj);
     }
 
-    public void StartPlayersAttack()
+    public void StartPlayersAttack(NetworkObject weapon, Vector2 direction)
     {
-        Debug.Log(weapons.Count);
-        foreach (var weapon in weapons)
-        {
-            weapon.GetComponent<Weapon>().Attack();
-        }
+        //foreach (var weapon in weapons)
+        //{
+            weapon.GetComponent<Weapon>().Attack(direction);
+        //}
     }
 }

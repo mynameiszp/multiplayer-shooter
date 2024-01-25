@@ -58,6 +58,8 @@ public class WeaponManager : MonoBehaviour
     {
         //foreach (var weapon in weapons)
         //{
+        Debug.Log(weapon);
+        Debug.Log(weapon.GetComponent<Weapon>());
             weapon.GetComponent<Weapon>().Attack(direction);
         //}
     }

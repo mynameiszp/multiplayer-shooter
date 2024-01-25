@@ -96,6 +96,7 @@ GameObject:
   - component: {fileID: 4221917551507249646}
   - component: {fileID: 7441380438173906828}
   - component: {fileID: 3389338793120734334}
+  - component: {fileID: 4900009389618559366}
   m_Layer: 0
   m_Name: PlayerBullet
   m_TagString: Untagged
@@ -172,6 +173,7 @@ MonoBehaviour:
   NestedObjects: []
   NetworkedBehaviours:
   - {fileID: 3389338793120734334}
+  - {fileID: 4900009389618559366}
 --- !u!114 &3389338793120734334
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -188,3 +190,15 @@ MonoBehaviour:
   SyncParent: 0
   _autoAOIOverride: 1
   DisableSharedModeInterpolation: 0
+--- !u!114 &4900009389618559366
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3766139204861445508}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2e5dc67953378154db4b98fd78fb73ec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

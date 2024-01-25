@@ -207,7 +207,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &105626883
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1431,8 +1431,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   skinsPanel: {fileID: 1884945771}
-  _playerPrefab:
-    RawGuidValue: ae4b90ee52128bd499816ed2f068e398
 --- !u!224 &1674452067 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 4132964179565097448, guid: 757e99cdd39ea204997b007d9253d727, type: 3}

@@ -12,7 +12,7 @@ public class Bullet : NetworkBehaviour
         if (collision.gameObject.CompareTag("Enemy"))
         {
             collision.gameObject.GetComponent<Enemy>().Health -= Harm;
-            Runner.Despawn(this.gameObject);
+            //Runner.Despawn(this.gameObject);
         }
     }
 

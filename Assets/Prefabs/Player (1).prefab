@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7758438373089361188}
   - component: {fileID: 3290371092563929291}
+  - component: {fileID: 8919993392613969340}
   m_Layer: 0
   m_Name: Interpolation Target
   m_TagString: Untagged
@@ -84,6 +85,27 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!95 &8919993392613969340
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6613817094434543677}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: c0b0d00ce4bf15c4f85842715ba694bc, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &6851798064706375994
 GameObject:
   m_ObjectHideFlags: 0
@@ -97,6 +119,8 @@ GameObject:
   - component: {fileID: -3484682199020027698}
   - component: {fileID: 8219272864691495592}
   - component: {fileID: 2740898277479810519}
+  - component: {fileID: 595095831659227757}
+  - component: {fileID: 2841005875074592067}
   m_Layer: 0
   m_Name: Player (1)
   m_TagString: Untagged
@@ -139,6 +163,7 @@ MonoBehaviour:
   NetworkedBehaviours:
   - {fileID: -3484682199020027698}
   - {fileID: 2740898277479810519}
+  - {fileID: 595095831659227757}
 --- !u!114 &-3484682199020027698
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -151,6 +176,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7dcc7d7d894323e4680f9e0221061957, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  animator: {fileID: 595095831659227757}
+  speed: 3
 --- !u!50 &8219272864691495592
 Rigidbody2D:
   serializedVersion: 4
@@ -200,3 +227,33 @@ MonoBehaviour:
     Position: 0.01
     Rotation: 0.01
     Scale: 0.01
+--- !u!114 &595095831659227757
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6851798064706375994}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 506319458, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Animator: {fileID: 8919993392613969340}
+  TotalWords: 3
+  ApplyTiming: 2
+  SyncSettings: 127
+  StateHashes: 0000000071e229d4b390e8768ded1c30ae5d1f96401e28e5826ce947
+  TriggerHashes: 000000001ae6174d
+--- !u!114 &2841005875074592067
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6851798064706375994}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 27cc7d04cffa0974f8b5d6d49f800f74, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

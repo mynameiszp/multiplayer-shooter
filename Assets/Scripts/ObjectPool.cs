@@ -7,18 +7,20 @@ using Zenject;
 
 public class ObjectPool : NetworkBehaviour
 {
-    private List<NetworkObject> _simpleZombies;
-    private List<NetworkObject> _updatedZombies;
-    private List<NetworkObject> _skeletons;
-    private List<NetworkObject> _goods;
     [SerializeField] private List<Vector2> _spawnPositions;
-    [SerializeField] private int enemiesAmount;
-    [SerializeField] private int goodsAmount;
+    [SerializeField] private int _enemiesAmount;
+    [SerializeField] private int _goodsAmount;
     [SerializeField] private GameObject _simpleZombiePrefab;
     [SerializeField] private GameObject _updatedZombiePrefab;
     [SerializeField] private GameObject _skeletonPrefab;
     [SerializeField] private List<GameObject> _goodsPrefabs;
     [SerializeField] private NetworkManager _manager;
+
+    private List<NetworkObject> _simpleZombies;
+    private List<NetworkObject> _updatedZombies;
+    private List<NetworkObject> _skeletons;
+    private List<NetworkObject> _goods;
+    private List<NetworkObject> _players;
 
     private void OnEnable()
     {
@@ -27,21 +29,35 @@ public class ObjectPool : NetworkBehaviour
 
     public void Initialize()
     {
+        _players = _manager.GetComponent<NetworkManager>().GetSpawnedCharactersList();
         _simpleZombies = new List<NetworkObject>();
         _updatedZombies = new List<NetworkObject>();
         _skeletons = new List<NetworkObject>();
         _goods = new List<NetworkObject>();
-        SpawnInFirstWave(_manager.Runner);
+        SpawnInFirstWave();
     }
-    public void SpawnInFirstWave(NetworkRunner runner)
+    public void SpawnInFirstWave()
     {
-
-        for (int i = 0; i < enemiesAmount; i++)
+        int vectorIndex;
+        NetworkObject enemy;
+        for (int i = 0; i < _enemiesAmount; i++)
         {
-            _simpleZombies.Add(runner.Spawn(_simpleZombiePrefab, _spawnPositions[Random.Range(0, _spawnPositions.Count)]));
+            vectorIndex = Random.Range(0, _spawnPositions.Count);
+            enemy = _manager.Runner.Spawn(_simpleZombiePrefab, _spawnPositions[vectorIndex]);
+            _simpleZombies.Add(enemy);
+            enemy.GetComponent<Enemy>().Players = _players;
+            enemy.GetComponent<Enemy>().IsServer = _manager.Runner.IsServer;
         }
-
     }
+
+    //public void FixedUpdate()
+    //{
+    //    if (_manager.Runner.IsServer && _manager.GetComponent<NetworkManager>().GetSpawnedCharactersList().Count == 2)
+    //    {
+    //        _players = _manager.GetComponent<NetworkManager>().GetSpawnedCharactersList();
+    //        SpawnInFirstWave();
+    //    }
+    //}
     //void Start()
     //{
     //        GameObject temp;

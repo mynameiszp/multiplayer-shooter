@@ -12,7 +12,7 @@ public class NetworkManager : MonoBehaviour, INetworkRunnerCallbacks
     [SerializeField] private FixedJoystick _shotJoystick;
     [SerializeField] private NetworkPrefabRef _playerPrefab;
     [SerializeField] private GameObject _objectPool;
-    private Dictionary<PlayerRef, NetworkObject> _spawnedCharacters = new Dictionary<PlayerRef, NetworkObject>();
+    public Dictionary<PlayerRef, NetworkObject> _spawnedCharacters { get; set; }
     public NetworkRunner Runner { get; set; }
 
     private void Awake()
@@ -21,6 +21,7 @@ public class NetworkManager : MonoBehaviour, INetworkRunnerCallbacks
     }
     async void StartGame()
     {
+        _spawnedCharacters = new Dictionary<PlayerRef, NetworkObject>();
         // Create the Fusion runner and let it know that we will be providing user input
         Runner = gameObject.AddComponent<NetworkRunner>();
         Runner.ProvideInput = true;
@@ -53,8 +54,10 @@ public class NetworkManager : MonoBehaviour, INetworkRunnerCallbacks
             NetworkObject networkPlayerObject = runner.Spawn(_playerPrefab, spawnPosition, Quaternion.identity, player);
             // Keep track of the player avatars for easy access
             _spawnedCharacters.Add(player, networkPlayerObject);
+            if(_spawnedCharacters.Count == 2)
             _objectPool.SetActive(true);
         }
+        Debug.Log(_spawnedCharacters.Values.Count);
     }
 
     public void OnPlayerLeft(NetworkRunner runner, PlayerRef player)
@@ -93,8 +96,8 @@ public class NetworkManager : MonoBehaviour, INetworkRunnerCallbacks
     public void OnReliableDataReceived(NetworkRunner runner, PlayerRef player, ReliableKey key, ArraySegment<byte> data) { }
     public void OnReliableDataProgress(NetworkRunner runner, PlayerRef player, ReliableKey key, float progress) { }
 
-    public void SetJoystik(FixedJoystick fixedJoystick)
+    public List<NetworkObject> GetSpawnedCharactersList()
     {
-        _moveJoystick = fixedJoystick;
+        return new List<NetworkObject>(_spawnedCharacters.Values);
     }
 }

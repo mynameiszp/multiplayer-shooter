@@ -10,7 +10,11 @@ public class NetworkManager : MonoBehaviour, INetworkRunnerCallbacks
 {
     [SerializeField] private FixedJoystick _moveJoystick;
     [SerializeField] private FixedJoystick _shotJoystick;
-    private NetworkRunner _runner;
+    [SerializeField] private NetworkPrefabRef _playerPrefab;
+    [SerializeField] private GameObject _objectPool;
+    private Dictionary<PlayerRef, NetworkObject> _spawnedCharacters = new Dictionary<PlayerRef, NetworkObject>();
+    public NetworkRunner Runner { get; set; }
+
     private void Awake()
     {
         StartGame();
@@ -18,9 +22,9 @@ public class NetworkManager : MonoBehaviour, INetworkRunnerCallbacks
     async void StartGame()
     {
         // Create the Fusion runner and let it know that we will be providing user input
-        _runner = gameObject.AddComponent<NetworkRunner>();
-        _runner.ProvideInput = true;
-        //gameObject.AddComponent<RunnerSimulatePhysics2D>();
+        Runner = gameObject.AddComponent<NetworkRunner>();
+        Runner.ProvideInput = true;
+
 
         // Create the NetworkSceneInfo from the current scene
         var scene = SceneRef.FromIndex(SceneManager.GetActiveScene().buildIndex);
@@ -31,7 +35,7 @@ public class NetworkManager : MonoBehaviour, INetworkRunnerCallbacks
         }
 
         // Start or join (depends on gamemode) a session with a specific name
-        await _runner.StartGame(new StartGameArgs()
+        await Runner.StartGame(new StartGameArgs()
         {
             GameMode = GameMode.AutoHostOrClient,
             SessionName = "TestRoom", //paste real name
@@ -39,8 +43,6 @@ public class NetworkManager : MonoBehaviour, INetworkRunnerCallbacks
             SceneManager = gameObject.AddComponent<NetworkSceneManagerDefault>()
         });
     }
-    [SerializeField] private NetworkPrefabRef _playerPrefab;
-    private Dictionary<PlayerRef, NetworkObject> _spawnedCharacters = new Dictionary<PlayerRef, NetworkObject>();
 
     public void OnPlayerJoined(NetworkRunner runner, PlayerRef player)
     {
@@ -51,6 +53,7 @@ public class NetworkManager : MonoBehaviour, INetworkRunnerCallbacks
             NetworkObject networkPlayerObject = runner.Spawn(_playerPrefab, spawnPosition, Quaternion.identity, player);
             // Keep track of the player avatars for easy access
             _spawnedCharacters.Add(player, networkPlayerObject);
+            _objectPool.SetActive(true);
         }
     }
 

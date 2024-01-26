@@ -2,21 +2,29 @@ using Fusion;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 using UnityEngine.Windows;
 using Zenject;
 using Zenject.SpaceFighter;
 
 public class PlayerController : NetworkBehaviour
 {
+    [SerializeField] private SpriteRenderer renderer;
     [SerializeField] private NetworkMecanimAnimator animator;
     [SerializeField] private float speed = 3f;
-    [Inject] private PlayerAnimation _animation;
+    [SerializeField] private NetworkPrefabRef _objectPool;
+    //[Inject] private PlayerAnimation _animation;
     private WeaponManager _weaponManager;
     private NetworkObject _weapon;
+    //private NetworkObject _networkObjectPool;
+
     public override void Spawned()
     {
         ConfigureWeapon();
-        Debug.Log(_animation);
+        //if (HasStateAuthority && _networkObjectPool == null)
+        //{
+        //    _networkObjectPool = Runner.Spawn(_objectPool, new Vector2(0, 0));
+        //}
     }
     private void ConfigureWeapon()
     {
@@ -37,6 +45,14 @@ public class PlayerController : NetworkBehaviour
             {
                 data.direction.Normalize();
                 gameObject.transform.position += Runner.DeltaTime * speed * (Vector3)data.direction;
+                if (data.direction.x > 0)
+                {
+                    //flip
+                }
+                else if (data.direction.x < 0)
+                {
+                    //flip
+                }
                 Run();
             }
             if (data.aim.magnitude > 0) _weaponManager.StartPlayersAttack(_weapon, data.aim); //not now

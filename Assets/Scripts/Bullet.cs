@@ -20,7 +20,6 @@ public class Bullet : NetworkBehaviour
             {
                 Runner.Despawn(collision.gameObject.GetComponent<NetworkObject>());
             }
-            //Runner.Despawn(gameObject.GetComponent<NetworkObject>());
             Disabled?.Invoke(gameObject.GetComponent<NetworkObject>());
         }
     }

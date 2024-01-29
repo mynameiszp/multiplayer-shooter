@@ -1,9 +1,6 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Fusion;
-using UnityEngine.SceneManagement;
-using Zenject;
 
 public class EnemiesManager : NetworkBehaviour
 {
@@ -13,9 +10,6 @@ public class EnemiesManager : NetworkBehaviour
     [SerializeField] private List<Vector2> _spawnPositions;
     [SerializeField] private int _firstWaveSpawnFrequency;
     [SerializeField] private int _goodsAmount;
-    //[SerializeField] private GameObject _simpleZombiePrefab;
-    //[SerializeField] private GameObject _updatedZombiePrefab;
-    //[SerializeField] private GameObject _skeletonPrefab;
     [SerializeField] private List<GameObject> _goodsPrefabs;
     [SerializeField] private NetworkManager _networkManager;
 
@@ -28,16 +22,15 @@ public class EnemiesManager : NetworkBehaviour
     private EnemyData _simpleZombieData;
     private EnemyData _upgradedZombieData;
     private EnemyData _skeletonData;
-    //private void OnEnable()
-    //{
-    //    Initialize();
-    //}
+    private WavesData _wavesData;
+
     public override void Spawned()
     {
         base.Spawned();
     }
-    public void Init(NetworkManager networkManager, List<EnemyData> enemyDataList)
+    public void Init(NetworkManager networkManager, WavesData wavesData, List<EnemyData> enemyDataList)
     {
+        _wavesData = wavesData;
         _networkManager = networkManager;
         if (enemyDataList.Count == 3)
         {
@@ -59,7 +52,7 @@ public class EnemiesManager : NetworkBehaviour
     }
     public void SpawnInFirstWave()
     {
-        _waveTimer = TickTimer.CreateFromSeconds(Runner, 60); //hardcoded
+        _waveTimer = TickTimer.CreateFromSeconds(Runner, _wavesData.firstWaveDuration);
     }
     public override void FixedUpdateNetwork()
     {
@@ -72,7 +65,6 @@ public class EnemiesManager : NetworkBehaviour
             }
         }
     }
-
 
     private NetworkObject SpawnEnemy(EnemyData enemyData)
     {

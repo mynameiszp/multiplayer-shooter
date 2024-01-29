@@ -9032,10 +9032,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _weaponManager: {fileID: 1471715319}
   _networkManager: {fileID: 304026626}
-  _firstWaveDuration: 60
-  _secondWaveDuration: 180
-  _thirdWaveDuration: 300
-  _breakDuration: 30
+  _bulletPrefab:
+    RawGuidValue: c2ca7e1db9c4ea14d934b3764221200c
+  _wavesData:
+    firstWaveDuration: 60
+    secondWaveDuration: 180
+    thirdWaveDuration: 300
+    breakDuration: 30
   _simpleZombieData:
     prefab: {fileID: 3532325623950839259, guid: 6bf4536e86ef6fa4fbc5827fb475c666, type: 3}
     harm: 5
@@ -9048,8 +9051,6 @@ MonoBehaviour:
     prefab: {fileID: 3099934003022756047, guid: 2b7fc2a1b93cffa459c58aea96e08f31, type: 3}
     harm: 20
     attackFrequency: 20
-  _bulletPrefab:
-    RawGuidValue: c2ca7e1db9c4ea14d934b3764221200c
   _gunData:
     prefab: {fileID: 970581634337726613, guid: 4603bcd3cd5771e4e8cb78f838fd9271, type: 3}
     attackDistance: 1

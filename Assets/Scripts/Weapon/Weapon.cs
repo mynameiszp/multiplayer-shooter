@@ -9,7 +9,8 @@ public class Weapon : NetworkBehaviour
     private float _attackFrequency = 0.5f;
     private NetworkPrefabRef _bullet;
     //private bool _attacked;
-    private List<NetworkObject> _bullets = new List<NetworkObject>(); 
+    private List<NetworkObject> _bullets = new List<NetworkObject>();
+    public List<NetworkObject> Bullets => _bullets;
     public float Harm {  get; set; }
     public float AttackDistance {  get; set; }
     public float AttackingEnemyNumber {  get; set; }
@@ -22,15 +23,23 @@ public class Weapon : NetworkBehaviour
         if (_attackTimer.Expired(Runner) && direction.sqrMagnitude > 0)
         {
             _attackTimer = TickTimer.CreateFromSeconds(Runner, _attackFrequency);
-            NetworkObject bullet = Runner.Spawn(_bullet, gameObject.transform.position);
-            bullet.GetComponent<Bullet>().Harm = Harm;
-            _bullets.Add(bullet);
-            bullet.transform.rotation = Quaternion.AngleAxis(Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg, Vector3.forward);
+            NetworkObject bulletNetworkObject = Runner.Spawn(_bullet, gameObject.transform.position);
+            Bullet bullet = bulletNetworkObject.GetComponent<Bullet>();
+            bullet.Harm = Harm;
+            bullet.Disabled += DestroyBullet;
+            _bullets.Add(bulletNetworkObject);
+            bulletNetworkObject.transform.rotation = Quaternion.AngleAxis(Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg, Vector3.forward);
             //bullet.transform.rotation = Quaternion.Euler(0, 0, Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg);
         }
             //_attacked = true;
         
         //move it
+    }
+    private void DestroyBullet(NetworkObject bullet)
+    {
+        if (!HasStateAuthority) return;
+        _bullets.Remove(bullet);
+        Runner.Despawn(bullet);
     }
     public override void FixedUpdateNetwork()
     {

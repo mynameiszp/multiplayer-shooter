@@ -2736,7 +2736,7 @@ PrefabInstance:
       objectReference: {fileID: 304026626}
     - target: {fileID: 502811082448645017, guid: 435b36527ae1cdb49a2f50d2527c3e53, type: 3}
       propertyPath: _enemiesAmount
-      value: 4
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3338412299260618498, guid: 435b36527ae1cdb49a2f50d2527c3e53, type: 3}
       propertyPath: SortKey

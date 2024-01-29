@@ -8,7 +8,6 @@ public class Weapon : NetworkBehaviour
     [Networked] private TickTimer _attackTimer { get; set; }
     private float _attackFrequency = 0.5f;
     private NetworkPrefabRef _bullet;
-    //private bool _attacked;
     private List<NetworkObject> _bullets = new List<NetworkObject>();
     public List<NetworkObject> Bullets => _bullets;
     public float Harm {  get; set; }

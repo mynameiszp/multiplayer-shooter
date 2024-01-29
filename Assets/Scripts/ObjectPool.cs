@@ -45,6 +45,7 @@ public class ObjectPool : NetworkBehaviour
             vectorIndex = Random.Range(0, _spawnPositions.Count);
             enemy = _manager.Runner.Spawn(_simpleZombiePrefab, _spawnPositions[vectorIndex]);
             _simpleZombies.Add(enemy);
+            //_spawnPositions[vectorIndex] = new Vector2(_spawnPositions[vectorIndex].x + 0.1f, _spawnPositions[vectorIndex].y + 0.1f).normalized;
             enemy.GetComponent<Enemy>().Players = _players;
             enemy.GetComponent<Enemy>().IsServer = _manager.Runner.IsServer;
         }

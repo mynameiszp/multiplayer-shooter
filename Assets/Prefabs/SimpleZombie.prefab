@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: -4572341685376233984}
   - component: {fileID: -1308038848290144033}
   - component: {fileID: 8919170437074253688}
+  - component: {fileID: 5603913500668576963}
   m_Layer: 0
   m_Name: SimpleZombie
   m_TagString: Enemy
@@ -48,7 +49,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db7b332f6153b3547ae9594bcd4e8b50, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _rigidbody: {fileID: 8919170437074253688}
+  _networkRigidbody: {fileID: 8919170437074253688}
+  _rigidbody: {fileID: -1308038848290144033}
   _speed: 1
 --- !u!114 &-4572341685376233984
 MonoBehaviour:
@@ -118,6 +120,41 @@ MonoBehaviour:
     Position: 0.01
     Rotation: 0.01
     Scale: 0.01
+--- !u!70 &5603913500668576963
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3532325623950839259}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: -0.039409578}
+  m_Size: {x: 0.54503965, y: 0.898661}
+  m_Direction: 0
 --- !u!1 &3590662408785961594
 GameObject:
   m_ObjectHideFlags: 0
@@ -232,7 +269,7 @@ CapsuleCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3590662408785961594}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
   m_IncludeLayers:

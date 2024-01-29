@@ -1,9 +1,11 @@
+using Cinemachine;
 using Fusion;
 using UnityEngine;
 
 public class PlayerController : NetworkBehaviour
 {
     //[SerializeField] private SpriteRenderer renderer;
+    //[SerializeField] private CinemachineVirtualCamera _camera;
     [SerializeField] private NetworkMecanimAnimator _animator;
     [SerializeField] private float _speed = 3f;
     [SerializeField] private NetworkPrefabRef _objectPool;
@@ -12,6 +14,7 @@ public class PlayerController : NetworkBehaviour
 
     public override void Spawned()
     {
+        //_camera.Follow = gameObject.transform;
         ConfigureWeapon();
     }
     private void ConfigureWeapon()

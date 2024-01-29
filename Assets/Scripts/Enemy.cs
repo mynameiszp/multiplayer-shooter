@@ -6,7 +6,8 @@ using UnityEngine;
 
 public class Enemy : NetworkBehaviour
 {
-    [SerializeField] private NetworkRigidbody2D _rigidbody;
+    [SerializeField] private NetworkRigidbody2D _networkRigidbody;
+    [SerializeField] private Rigidbody2D _rigidbody;
     [SerializeField] private float _speed = 1f;
     public List<NetworkObject> Players { get; set; }
     public bool IsServer { get; set; }
@@ -30,7 +31,8 @@ public class Enemy : NetworkBehaviour
             }
             Vector3 direction = (_targetPlayer.transform.position - gameObject.transform.position).normalized;
             Vector3 newPosition = transform.position + (_speed * Runner.DeltaTime * direction);
-            _rigidbody.Teleport(newPosition);
+            //_networkRigidbody.Teleport(newPosition);
+            _rigidbody.MovePosition(newPosition);
         }
     }
 
@@ -38,6 +40,7 @@ public class Enemy : NetworkBehaviour
     {
 
     }
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Player"))

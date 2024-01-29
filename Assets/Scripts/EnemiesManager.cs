@@ -5,16 +5,19 @@ using Fusion;
 using UnityEngine.SceneManagement;
 using Zenject;
 
-public class ObjectPool : NetworkBehaviour
+public class EnemiesManager : NetworkBehaviour
 {
+    [Networked] private TickTimer _spawnTimer { get; set; }
+    [Networked] private TickTimer _waveTimer { get; set; }
+
     [SerializeField] private List<Vector2> _spawnPositions;
-    [SerializeField] private int _enemiesAmount;
+    [SerializeField] private int _firstWaveSpawnFrequency;
     [SerializeField] private int _goodsAmount;
-    [SerializeField] private GameObject _simpleZombiePrefab;
-    [SerializeField] private GameObject _updatedZombiePrefab;
-    [SerializeField] private GameObject _skeletonPrefab;
+    //[SerializeField] private GameObject _simpleZombiePrefab;
+    //[SerializeField] private GameObject _updatedZombiePrefab;
+    //[SerializeField] private GameObject _skeletonPrefab;
     [SerializeField] private List<GameObject> _goodsPrefabs;
-    [SerializeField] private NetworkManager _manager;
+    [SerializeField] private NetworkManager _networkManager;
 
     private List<NetworkObject> _simpleZombies;
     private List<NetworkObject> _updatedZombies;
@@ -22,14 +25,32 @@ public class ObjectPool : NetworkBehaviour
     private List<NetworkObject> _goods;
     private List<NetworkObject> _players;
 
-    private void OnEnable()
+    private EnemyData _simpleZombieData;
+    private EnemyData _upgradedZombieData;
+    private EnemyData _skeletonData;
+    //private void OnEnable()
+    //{
+    //    Initialize();
+    //}
+    public override void Spawned()
     {
+        base.Spawned();
+    }
+    public void Init(NetworkManager networkManager, List<EnemyData> enemyDataList)
+    {
+        _networkManager = networkManager;
+        if (enemyDataList.Count == 3)
+        {
+            _simpleZombieData = enemyDataList[0];
+            _upgradedZombieData = enemyDataList[1];
+            _skeletonData = enemyDataList[2];
+        }
         Initialize();
     }
 
-    public void Initialize()
+    private void Initialize()
     {
-        _players = _manager.GetComponent<NetworkManager>().GetSpawnedCharactersList();
+        _players = _networkManager.GetComponent<NetworkManager>().GetSpawnedCharactersList();
         _simpleZombies = new List<NetworkObject>();
         _updatedZombies = new List<NetworkObject>();
         _skeletons = new List<NetworkObject>();
@@ -38,17 +59,31 @@ public class ObjectPool : NetworkBehaviour
     }
     public void SpawnInFirstWave()
     {
-        int vectorIndex;
-        NetworkObject enemy;
-        for (int i = 0; i < _enemiesAmount; i++)
+        _waveTimer = TickTimer.CreateFromSeconds(Runner, 60); //hardcoded
+    }
+    public override void FixedUpdateNetwork()
+    {
+        if (!_waveTimer.Expired(Runner))
         {
-            vectorIndex = Random.Range(0, _spawnPositions.Count);
-            enemy = _manager.Runner.Spawn(_simpleZombiePrefab, _spawnPositions[vectorIndex]);
-            _simpleZombies.Add(enemy);
-            //_spawnPositions[vectorIndex] = new Vector2(_spawnPositions[vectorIndex].x + 0.1f, _spawnPositions[vectorIndex].y + 0.1f).normalized;
-            enemy.GetComponent<Enemy>().Players = _players;
-            enemy.GetComponent<Enemy>().IsServer = _manager.Runner.IsServer;
+            if (_spawnTimer.ExpiredOrNotRunning(Runner))
+            {
+                _spawnTimer = TickTimer.CreateFromSeconds(Runner, _firstWaveSpawnFrequency);
+                SpawnEnemy(_simpleZombieData);
+            }
         }
+    }
+
+
+    private NetworkObject SpawnEnemy(EnemyData enemyData)
+    {
+        Enemy enemy;
+        int vectorIndex = Random.Range(0, _spawnPositions.Count);
+        NetworkObject enemyNetworkObject = _networkManager.Runner.Spawn(enemyData.prefab, _spawnPositions[vectorIndex]);
+        enemy = enemyNetworkObject.GetComponent<Enemy>();
+        enemy.Players = _players;
+        enemy.Harm = enemyData.harm;
+        enemy.AttackFrequency = enemyData.attackFrequency;
+        return enemyNetworkObject;
     }
 
     //public void FixedUpdate()

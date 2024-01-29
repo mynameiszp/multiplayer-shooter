@@ -6,6 +6,7 @@ public class PlayerController : NetworkBehaviour
 {
     //[SerializeField] private SpriteRenderer renderer;
     //[SerializeField] private CinemachineVirtualCamera _camera;
+    [SerializeField] private float _health;
     [SerializeField] private NetworkMecanimAnimator _animator;
     [SerializeField] private float _speed = 3f;
     [SerializeField] private NetworkPrefabRef _objectPool;
@@ -19,7 +20,7 @@ public class PlayerController : NetworkBehaviour
     }
     private void ConfigureWeapon()
     {
-        //if (!HasStateAuthority) return;
+        if (!HasStateAuthority) return;
         _weaponManager = WeaponManager.Instance;
         WeaponData weaponData = _weaponManager.GetWeapon();
         _weapon = Runner.Spawn(weaponData.prefab);
@@ -62,5 +63,9 @@ public class PlayerController : NetworkBehaviour
     public void Die()
     {
         _animator.Animator.SetTrigger("Dead");
+    }
+    public void TakeHealth(float damage)
+    {
+        _health -= damage;
     }
 }

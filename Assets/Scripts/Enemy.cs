@@ -10,14 +10,15 @@ public class Enemy : NetworkBehaviour
     [SerializeField] private Rigidbody2D _rigidbody;
     [SerializeField] private float _speed = 1f;
     public List<NetworkObject> Players { get; set; }
-    public bool IsServer { get; set; }
-    public float Health { get; set; }
+    public float Harm { get; set; }
+    public float AttackFrequency { get; set; }
+    private float _health;
     private float _enemyFirstPlayerDistance;
     private float _enemySecondPlayerDistance;
     private NetworkObject _targetPlayer;
     public override void FixedUpdateNetwork()
     {
-        if (IsServer)
+        if (HasStateAuthority)
         {
             _enemyFirstPlayerDistance = Vector3.Distance(gameObject.transform.position, Players[0].transform.position);
             _enemySecondPlayerDistance = Vector3.Distance(gameObject.transform.position, Players[1].transform.position);
@@ -43,9 +44,20 @@ public class Enemy : NetworkBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        if (!HasStateAuthority) return;
         if (collision.gameObject.CompareTag("Player"))
         {
-            //take health
+            var player = collision.gameObject.GetComponent<PlayerController>();
+            player.TakeHealth(Harm); ;
         }
+    }
+    public void TakeHealth(float damage)
+    {
+        _health -= damage;
+    }
+
+    public float GetHealth()
+    {
+        return _health;
     }
 }

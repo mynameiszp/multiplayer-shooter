@@ -11,9 +11,11 @@ public class NetworkManager : MonoBehaviour, INetworkRunnerCallbacks
     [SerializeField] private FixedJoystick _moveJoystick;
     [SerializeField] private FixedJoystick _shotJoystick;
     [SerializeField] private NetworkPrefabRef _playerPrefab;
-    [SerializeField] private GameObject _objectPool;
+    [SerializeField] private NetworkPrefabRef _enemiesManagerPrefab;
+    private NetworkObject _enemiesManager;
     public Dictionary<PlayerRef, NetworkObject> _spawnedCharacters { get; set; }
     public NetworkRunner Runner { get; set; }
+    public Action PlayersPresent;
 
     private void Awake()
     {
@@ -55,9 +57,11 @@ public class NetworkManager : MonoBehaviour, INetworkRunnerCallbacks
             // Keep track of the player avatars for easy access
             _spawnedCharacters.Add(player, networkPlayerObject);
             if(_spawnedCharacters.Count == 2)
-            _objectPool.SetActive(true);
+            {
+                _enemiesManager = runner.Spawn(_enemiesManagerPrefab);
+                PlayersPresent?.Invoke();
+            }
         }
-        Debug.Log(_spawnedCharacters.Values.Count);
     }
 
     public void OnPlayerLeft(NetworkRunner runner, PlayerRef player)
@@ -99,5 +103,10 @@ public class NetworkManager : MonoBehaviour, INetworkRunnerCallbacks
     public List<NetworkObject> GetSpawnedCharactersList()
     {
         return new List<NetworkObject>(_spawnedCharacters.Values);
+    }
+
+    public NetworkObject GetEnemiesManager()
+    {
+        return _enemiesManager;
     }
 }

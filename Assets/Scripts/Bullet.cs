@@ -15,9 +15,8 @@ public class Bullet : NetworkBehaviour
         if (collision.gameObject.CompareTag("Enemy"))
         {
             var enemy = collision.gameObject.GetComponent<Enemy>();
-            enemy.Health -= Harm;
-            Debug.Log(enemy.Health);
-            if (enemy.Health <= 0)
+            enemy.TakeHealth(Harm);
+            if (enemy.GetHealth() <= 0)
             {
                 Runner.Despawn(collision.gameObject.GetComponent<NetworkObject>());
             }

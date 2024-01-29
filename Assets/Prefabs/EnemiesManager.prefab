@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 502811082448645017}
   - component: {fileID: 3338412299260618498}
   m_Layer: 0
-  m_Name: ObjectPool
+  m_Name: EnemiesManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -46,16 +46,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _spawnPositions:
-  - {x: 1, y: 0}
-  - {x: -1, y: 0}
-  - {x: 0, y: 1}
-  - {x: 0, y: -1}
-  enemiesAmount: 3
-  goodsAmount: 0
-  _simpleZombiePrefab: {fileID: 3532325623950839259, guid: 6bf4536e86ef6fa4fbc5827fb475c666, type: 3}
-  _updatedZombiePrefab: {fileID: 7562161451846416980, guid: fb2cdd1c3f910d94a884496151312754, type: 3}
-  _skeletonPrefab: {fileID: 3099934003022756047, guid: 2b7fc2a1b93cffa459c58aea96e08f31, type: 3}
+  - {x: 18, y: 0}
+  - {x: -18, y: 0}
+  - {x: 0, y: 13}
+  - {x: 0, y: -13}
+  - {x: -18, y: -13}
+  - {x: 18, y: -13}
+  - {x: 18, y: 13}
+  - {x: -18, y: 13}
+  _firstWaveSpawnFrequency: 3
+  _goodsAmount: 0
   _goodsPrefabs: []
+  _networkManager: {fileID: 0}
 --- !u!114 &3338412299260618498
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -68,7 +70,7 @@ MonoBehaviour:
   m_Script: {fileID: -1552182283, guid: e725a070cec140c4caffb81624c8c787, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SortKey: 871252157
+  SortKey: 1403970864
   ObjectInterest: 1
   Flags: 262145
   NestedObjects: []

@@ -9,7 +9,7 @@ public class PlayerController : NetworkBehaviour
     [SerializeField] private float _health;
     [SerializeField] private NetworkMecanimAnimator _animator;
     [SerializeField] private float _speed = 3f;
-    [SerializeField] private NetworkPrefabRef _objectPool;
+    //[SerializeField] private NetworkPrefabRef _objectPool;
     private WeaponManager _weaponManager;
     private NetworkObject _weapon;
 
@@ -26,7 +26,7 @@ public class PlayerController : NetworkBehaviour
         _weapon = Runner.Spawn(weaponData.prefab);
         _weapon.transform.parent = gameObject.transform;
         _weaponManager.AddWeaponToList(_weapon);
-        _weapon.GetComponent<Weapon>().Initialize(_weaponManager.Bullet, weaponData.attackDistance, weaponData.harm, weaponData.attackingEnemyNumber);
+        _weapon.GetComponent<Weapon>().Initialize(_weaponManager.Bullet, weaponData.attackDistance, weaponData.damage, weaponData.attackingEnemyNumber);
     }
     public override void FixedUpdateNetwork()
     {

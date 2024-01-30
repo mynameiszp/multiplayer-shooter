@@ -1,7 +1,7 @@
 using UnityEngine;
 
-[System.Serializable]
-public class WavesData
+[CreateAssetMenu(fileName = "WavesData", menuName = "ScriptableObjects/WavesData", order = 1)]
+public class WavesData: ScriptableObject
 {
     public float firstWaveDuration;
     public float secondWaveDuration;

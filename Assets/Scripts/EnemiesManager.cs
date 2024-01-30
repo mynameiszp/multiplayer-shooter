@@ -73,8 +73,10 @@ public class EnemiesManager : NetworkBehaviour
         NetworkObject enemyNetworkObject = _networkManager.Runner.Spawn(enemyData.prefab, _spawnPositions[vectorIndex]);
         enemy = enemyNetworkObject.GetComponent<Enemy>();
         enemy.Players = _players;
-        enemy.Harm = enemyData.harm;
+        enemy.Damage = enemyData.damage;
         enemy.AttackFrequency = enemyData.attackFrequency;
+        enemy.Speed = enemyData.speed;
+        enemy.Health = enemyData.health;
         return enemyNetworkObject;
     }
 

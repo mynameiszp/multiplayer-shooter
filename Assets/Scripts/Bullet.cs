@@ -6,16 +6,15 @@ using System;
 
 public class Bullet : NetworkBehaviour
 {
-    public float Harm { get; set; }
+    public float Damage { get; set; }
     public Action<NetworkObject> Disabled;
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (!HasStateAuthority) return;
-        if (collision.gameObject.CompareTag("Enemy"))
+        if (collision.gameObject.TryGetComponent(out Enemy enemy))
         {
-            var enemy = collision.gameObject.GetComponent<Enemy>();
-            enemy.TakeHealth(Harm);
+            enemy.TakeHealth(Damage);
             if (enemy.GetHealth() <= 0)
             {
                 Runner.Despawn(collision.gameObject.GetComponent<NetworkObject>());
@@ -23,5 +22,4 @@ public class Bullet : NetworkBehaviour
             Disabled?.Invoke(gameObject.GetComponent<NetworkObject>());
         }
     }
-
 }

@@ -9034,38 +9034,13 @@ MonoBehaviour:
   _networkManager: {fileID: 304026626}
   _bulletPrefab:
     RawGuidValue: c2ca7e1db9c4ea14d934b3764221200c
-  _wavesData:
-    firstWaveDuration: 60
-    secondWaveDuration: 180
-    thirdWaveDuration: 300
-    breakDuration: 30
-  _simpleZombieData:
-    prefab: {fileID: 3532325623950839259, guid: 6bf4536e86ef6fa4fbc5827fb475c666, type: 3}
-    harm: 5
-    attackFrequency: 5
-  _upgradedZombieData:
-    prefab: {fileID: 7562161451846416980, guid: fb2cdd1c3f910d94a884496151312754, type: 3}
-    harm: 10
-    attackFrequency: 10
-  _skeletonData:
-    prefab: {fileID: 3099934003022756047, guid: 2b7fc2a1b93cffa459c58aea96e08f31, type: 3}
-    harm: 20
-    attackFrequency: 20
-  _gunData:
-    prefab: {fileID: 970581634337726613, guid: 4603bcd3cd5771e4e8cb78f838fd9271, type: 3}
-    attackDistance: 1
-    harm: 1
-    attackingEnemyNumber: 1
-  _shotgunData:
-    prefab: {fileID: 4882488924739711103, guid: a7a3c74edddb6b542804a7e5287378d5, type: 3}
-    attackDistance: 2
-    harm: 2
-    attackingEnemyNumber: 2
-  _rifleData:
-    prefab: {fileID: 6180028794676540414, guid: 365dd9e3559592e41a9f9e6ab30d5d0c, type: 3}
-    attackDistance: 3
-    harm: 3
-    attackingEnemyNumber: 3
+  _wavesData: {fileID: 11400000, guid: bfb177f5b28b2974e9be483b9665921c, type: 2}
+  _simpleZombieData: {fileID: 11400000, guid: d8605c63bf573a24baa789e4bd2598bf, type: 2}
+  _upgradedZombieData: {fileID: 11400000, guid: 3f699fbb8350efa48aeb66d2e6ebfd6c, type: 2}
+  _skeletonData: {fileID: 11400000, guid: f7203b9d4c2ae2448acaa028ecaec32f, type: 2}
+  _gunData: {fileID: 11400000, guid: cb557baea4f202246a3b3c43389e62e7, type: 2}
+  _shotgunData: {fileID: 11400000, guid: 0955a89dca21e424c888014fb9185fcb, type: 2}
+  _rifleData: {fileID: 11400000, guid: db32b48a6dfe97b4ba1473bfa62ef467, type: 2}
 --- !u!4 &1266281774
 Transform:
   m_ObjectHideFlags: 0

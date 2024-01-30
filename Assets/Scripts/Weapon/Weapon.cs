@@ -10,7 +10,7 @@ public class Weapon : NetworkBehaviour
     private NetworkPrefabRef _bullet;
     private List<NetworkObject> _bullets = new List<NetworkObject>();
     public List<NetworkObject> Bullets => _bullets;
-    public float Harm {  get; set; }
+    public float Damage {  get; set; }
     public float AttackDistance {  get; set; }
     public float AttackingEnemyNumber {  get; set; }
     public override void Spawned()
@@ -24,15 +24,11 @@ public class Weapon : NetworkBehaviour
             _attackTimer = TickTimer.CreateFromSeconds(Runner, _attackFrequency);
             NetworkObject bulletNetworkObject = Runner.Spawn(_bullet, gameObject.transform.position);
             Bullet bullet = bulletNetworkObject.GetComponent<Bullet>();
-            bullet.Harm = Harm;
+            bullet.Damage = Damage;
             bullet.Disabled += DestroyBullet;
             _bullets.Add(bulletNetworkObject);
             bulletNetworkObject.transform.rotation = Quaternion.AngleAxis(Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg, Vector3.forward);
-            //bullet.transform.rotation = Quaternion.Euler(0, 0, Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg);
         }
-            //_attacked = true;
-        
-        //move it
     }
     private void DestroyBullet(NetworkObject bullet)
     {
@@ -63,7 +59,7 @@ public class Weapon : NetworkBehaviour
     public void Initialize(NetworkPrefabRef bullet, float attackDistance, float harm, float attackingEnemyNumber)
     {
         _bullet = bullet;
-        Harm = harm;
+        Damage = harm;
         AttackDistance = attackDistance;
         AttackingEnemyNumber = attackingEnemyNumber;
     }

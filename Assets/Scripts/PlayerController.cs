@@ -12,18 +12,22 @@ public class PlayerController : NetworkBehaviour
     [SerializeField] private float _speed = 3f;
     private WeaponManager _weaponManager;
     private Weapon _weapon;
-    private bool _isDead;
+    [Networked]
+    public bool IsDead { get; set; }
     public Action<PlayerController> PlayerDead;
 
     public override void Spawned()
     {
         //_camera.Follow = gameObject.transform;
+        if (!HasStateAuthority) return;
         ConfigureWeapon();
         PlayerDead += Die;
+        PlayerDead += DestroyWeapon;
     }
+
     private void ConfigureWeapon()
     {
-        if (!HasStateAuthority) return;
+        //if (!HasStateAuthority) return;
         _weaponManager = WeaponManager.Instance;
         WeaponData weaponData = _weaponManager.GetWeapon();
         _weapon = Runner.Spawn(weaponData.prefab).GetComponent<Weapon>();
@@ -34,7 +38,8 @@ public class PlayerController : NetworkBehaviour
     public override void FixedUpdateNetwork()
     {
         var input = GetInput(out NetworkInputData data);
-        if (Validate())
+        if (!Runner.IsForward) return;
+        if (!IsDead)
         {
             if (data.direction.magnitude > 0)
             {
@@ -52,7 +57,11 @@ public class PlayerController : NetworkBehaviour
             }
             if (data.aim.magnitude > 0) _weaponManager.StartPlayersAttack(_weapon, data.aim); //not now
             if (data.direction.magnitude == 0) Idle();
-        }        
+        }
+        else
+        {
+            _animator.Animator.SetBool(AnimationVariables.PLAYER_DEAD_ANIMATION, true);
+        }
     }
     public void Run()
     {
@@ -64,13 +73,12 @@ public class PlayerController : NetworkBehaviour
     }
     public void Die(PlayerController player)
     {
-        _animator.Animator.SetTrigger(AnimationVariables.PLAYER_DEAD_ANIMATION);
-        _isDead = true;
+        IsDead = true;
     }
     public void TakeHealth(float damage)
     {
         _health -= damage;
-        if(_health <= 0)
+        if (_health <= 0)
         {
             PlayerDead?.Invoke(this);
         }
@@ -78,6 +86,10 @@ public class PlayerController : NetworkBehaviour
 
     private bool Validate()
     {
-        return Runner.IsForward && !_isDead;
+        return Runner.IsForward && !IsDead;
+    }
+    private void DestroyWeapon(PlayerController player)
+    {
+        Runner.Despawn(_weapon.GetComponent<NetworkObject>());
     }
 }

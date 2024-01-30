@@ -7,7 +7,6 @@ public class Enemy : NetworkBehaviour
 {
     [SerializeField] private NetworkRigidbody2D _networkRigidbody;
     [SerializeField] private Rigidbody2D _rigidbody;
-    public List<NetworkObject> Players { get; set; }
     public float Damage { get; set; }
     public float AttackFrequency { get; set; }
     public float Speed { get; set; }
@@ -15,24 +14,34 @@ public class Enemy : NetworkBehaviour
     private float _enemyFirstPlayerDistance;
     private float _enemySecondPlayerDistance;
     private NetworkObject _targetPlayer;
+    private List<NetworkObject> _players;
+    public void Init(List<NetworkObject> players)
+    {
+        _players = players;
+        foreach (var player in _players)
+        {
+            player.GetComponent<PlayerController>().PlayerDead += ForgetPlayer;
+        }
+    }
     public override void FixedUpdateNetwork()
     {
         if (HasStateAuthority)
         {
-            _enemyFirstPlayerDistance = Vector3.Distance(gameObject.transform.position, Players[0].transform.position);
-            _enemySecondPlayerDistance = Vector3.Distance(gameObject.transform.position, Players[1].transform.position);
-            if (_enemyFirstPlayerDistance <= _enemySecondPlayerDistance)
+            float distance = 0f;
+            _targetPlayer = null;
+            foreach (var player in _players)
             {
-                _targetPlayer = Players[0];
+                if(Vector3.Distance(gameObject.transform.position, player.transform.position) >= distance)
+                {
+                    _targetPlayer = player;
+                }
             }
-            else
+            if (_targetPlayer != null)
             {
-                _targetPlayer = Players[1];
+                Vector3 direction = (_targetPlayer.transform.position - gameObject.transform.position).normalized;
+                Vector3 newPosition = transform.position + (Speed * Runner.DeltaTime * direction);
+                _rigidbody.MovePosition(newPosition);
             }
-            Vector3 direction = (_targetPlayer.transform.position - gameObject.transform.position).normalized;
-            Vector3 newPosition = transform.position + (Speed * Runner.DeltaTime * direction);
-            //_networkRigidbody.Teleport(newPosition);
-            _rigidbody.MovePosition(newPosition);
         }
     }
 
@@ -41,7 +50,7 @@ public class Enemy : NetworkBehaviour
 
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
         if (!HasStateAuthority) return;
         if (collision.gameObject.TryGetComponent(out PlayerController player))
@@ -49,14 +58,19 @@ public class Enemy : NetworkBehaviour
             player.TakeHealth(Damage);
         }
     }
+
     public void TakeHealth(float damage)
     {
         Health -= damage;
-        Debug.Log(Health);
     }
 
     public float GetHealth()
     {
         return Health;
+    }
+
+    private void ForgetPlayer(PlayerController player)
+    {
+        _players.Remove(player.gameObject.GetComponent<NetworkObject>());
     }
 }

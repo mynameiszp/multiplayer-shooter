@@ -9,7 +9,7 @@ public class WeaponManager : MonoBehaviour
     private GameObject _hostWeapon;
     private GameObject _clientWeapon;
     public NetworkPrefabRef Bullet { get; set; }
-    private List<NetworkObject> _weapons = new List<NetworkObject>();
+    private List<Weapon> _weapons = new List<Weapon>();
     private List<WeaponData> _availableWeapons = new List<WeaponData>();
     public static WeaponManager Instance { get; private set; }
 
@@ -34,13 +34,13 @@ public class WeaponManager : MonoBehaviour
         _availableWeapons.Remove(weapon);
         return weapon;
     }
-    public void AddWeaponToList(NetworkObject obj)
+    public void AddWeaponToList(Weapon obj)
     {
         _weapons.Add(obj);
     }
 
-    public void StartPlayersAttack(NetworkObject weapon, Vector2 direction)
+    public void StartPlayersAttack(Weapon weapon, Vector2 direction)
     {
-        weapon.GetComponent<Weapon>().Attack(direction);
+        weapon.Attack(direction);
     }
 }

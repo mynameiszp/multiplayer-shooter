@@ -1,5 +1,6 @@
 using Cinemachine;
 using Fusion;
+using System;
 using UnityEngine;
 
 public class PlayerController : NetworkBehaviour
@@ -9,29 +10,31 @@ public class PlayerController : NetworkBehaviour
     [SerializeField] private float _health;
     [SerializeField] private NetworkMecanimAnimator _animator;
     [SerializeField] private float _speed = 3f;
-    //[SerializeField] private NetworkPrefabRef _objectPool;
     private WeaponManager _weaponManager;
-    private NetworkObject _weapon;
+    private Weapon _weapon;
+    private bool _isDead;
+    public Action<PlayerController> PlayerDead;
 
     public override void Spawned()
     {
         //_camera.Follow = gameObject.transform;
         ConfigureWeapon();
+        PlayerDead += Die;
     }
     private void ConfigureWeapon()
     {
         if (!HasStateAuthority) return;
         _weaponManager = WeaponManager.Instance;
         WeaponData weaponData = _weaponManager.GetWeapon();
-        _weapon = Runner.Spawn(weaponData.prefab);
+        _weapon = Runner.Spawn(weaponData.prefab).GetComponent<Weapon>();
         _weapon.transform.parent = gameObject.transform;
         _weaponManager.AddWeaponToList(_weapon);
-        _weapon.GetComponent<Weapon>().Initialize(_weaponManager.Bullet, weaponData.attackDistance, weaponData.damage, weaponData.attackingEnemyNumber);
+        _weapon.Initialize(_weaponManager.Bullet, weaponData.attackDistance, weaponData.damage, weaponData.attackingEnemyNumber);
     }
     public override void FixedUpdateNetwork()
     {
         var input = GetInput(out NetworkInputData data);
-        if (Runner.IsForward)
+        if (Validate())
         {
             if (data.direction.magnitude > 0)
             {
@@ -49,23 +52,32 @@ public class PlayerController : NetworkBehaviour
             }
             if (data.aim.magnitude > 0) _weaponManager.StartPlayersAttack(_weapon, data.aim); //not now
             if (data.direction.magnitude == 0) Idle();
-        }
-        
+        }        
     }
     public void Run()
     {
-        _animator.Animator.SetBool("isRunning", true);
+        _animator.Animator.SetBool(AnimationVariables.PLAYER_RUN_ANIMATION, true);
     }
     public void Idle()
     {
-        _animator.Animator.SetBool("isRunning", false);
+        _animator.Animator.SetBool(AnimationVariables.PLAYER_RUN_ANIMATION, false);
     }
-    public void Die()
+    public void Die(PlayerController player)
     {
-        _animator.Animator.SetTrigger("Dead");
+        _animator.Animator.SetTrigger(AnimationVariables.PLAYER_DEAD_ANIMATION);
+        _isDead = true;
     }
     public void TakeHealth(float damage)
     {
         _health -= damage;
+        if(_health <= 0)
+        {
+            PlayerDead?.Invoke(this);
+        }
+    }
+
+    private bool Validate()
+    {
+        return Runner.IsForward && !_isDead;
     }
 }

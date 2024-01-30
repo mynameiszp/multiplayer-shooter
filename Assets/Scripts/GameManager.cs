@@ -44,7 +44,6 @@ public class GameManager : MonoBehaviour
     }
     private void InitializeEnemyManager()
     {
-        //_enemiesManager.SetActive(true);
         _enemiesManager = _networkManager.GetEnemiesManager();
         _enemiesManager.GetComponent<EnemiesManager>().Init(_networkManager, _wavesData, new List<EnemyData>() { _simpleZombieData, _upgradedZombieData, _skeletonData });
     }

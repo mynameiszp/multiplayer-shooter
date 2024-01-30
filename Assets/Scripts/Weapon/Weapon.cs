@@ -40,20 +40,8 @@ public class Weapon : NetworkBehaviour
     {
         foreach (var item in _bullets)
         {
-            //item.transform.position += item.transform.forward * Runner.DeltaTime;
             item.transform.Translate(new Vector3(Runner.DeltaTime, 0, 0) * 8);
         }
-        //if (_attacked)
-        //{
-        //    Debug.Log("Attaced");
-        //    //Debug.Log(_attackTimer.RemainingTicks(Runner));
-        //    Debug.Log(GetInput(out NetworkInputData data));
-        //    if (_attackTimer.Expired(Runner) /*&& GetInput(out NetworkInputData data)*/)
-        //    {
-        //        Debug.Log(data.aim);
-        //        Attack(data.aim);
-        //    }
-        //}        
     }
 
     public void Initialize(NetworkPrefabRef bullet, float attackDistance, float harm, float attackingEnemyNumber)

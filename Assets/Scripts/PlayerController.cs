@@ -11,6 +11,7 @@ public class PlayerController : NetworkBehaviour
     [SerializeField] private float _health;
     [SerializeField] private NetworkMecanimAnimator _animator;
     [SerializeField] private float _speed = 3f;
+    [SerializeField] private Rigidbody2D _rigidbody;
     private WeaponManager _weaponManager;
     private CinemachineVirtualCamera _camera;
     private Weapon _weapon;
@@ -51,7 +52,8 @@ public class PlayerController : NetworkBehaviour
             if (data.direction.magnitude > 0)
             {
                 data.direction.Normalize();
-                gameObject.transform.position += Runner.DeltaTime * _speed * (Vector3)data.direction;
+                _rigidbody.MovePosition(transform.position + Runner.DeltaTime * _speed * (Vector3)data.direction);
+                //gameObject.transform.position += Runner.DeltaTime * _speed * (Vector3)data.direction;
                 if (data.direction.x > 0)
                 {
                     //flip

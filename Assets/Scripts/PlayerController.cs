@@ -17,6 +17,8 @@ public class PlayerController : NetworkBehaviour
     private Weapon _weapon;
     [Networked]
     public bool IsDead { get; set; }
+    [Networked]
+    public Vector3 NetworkedScale { get; set; }
     public Action<PlayerController> PlayerDead;
 
     public override void Spawned()
@@ -53,15 +55,15 @@ public class PlayerController : NetworkBehaviour
             {
                 data.direction.Normalize();
                 _rigidbody.MovePosition(transform.position + Runner.DeltaTime * _speed * (Vector3)data.direction);
-                //gameObject.transform.position += Runner.DeltaTime * _speed * (Vector3)data.direction;
                 if (data.direction.x > 0)
                 {
-                    //flip
+                    NetworkedScale = new Vector3(Math.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
                 }
                 else if (data.direction.x < 0)
                 {
-                    //flip
+                    NetworkedScale = new Vector3(-Math.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
                 }
+                transform.localScale = NetworkedScale;
                 Run();
             }
             if (data.aim.magnitude > 0) _weaponManager.StartPlayersAttack(_weapon, data.aim); //not now

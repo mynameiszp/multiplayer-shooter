@@ -23,6 +23,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private WeaponData _rifleData;
 
     private NetworkObject _enemiesManager;
+    
 
     private void Awake()
     {

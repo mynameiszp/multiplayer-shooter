@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Shotgun
   m_EditorClassIdentifier: 
   prefab: {fileID: 4882488924739711103, guid: a7a3c74edddb6b542804a7e5287378d5, type: 3}
-  attackDistance: 15
+  attackDistance: 6
   damage: 5
   attackingEnemyNumber: 5

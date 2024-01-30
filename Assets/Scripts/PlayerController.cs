@@ -1,16 +1,18 @@
 using Cinemachine;
 using Fusion;
 using System;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerController : NetworkBehaviour
 {
     //[SerializeField] private SpriteRenderer renderer;
-    //[SerializeField] private CinemachineVirtualCamera _camera;
+    [SerializeField] private GameObject _cameraPrefab;
     [SerializeField] private float _health;
     [SerializeField] private NetworkMecanimAnimator _animator;
     [SerializeField] private float _speed = 3f;
     private WeaponManager _weaponManager;
+    private CinemachineVirtualCamera _camera;
     private Weapon _weapon;
     [Networked]
     public bool IsDead { get; set; }
@@ -18,6 +20,12 @@ public class PlayerController : NetworkBehaviour
 
     public override void Spawned()
     {
+        if (HasInputAuthority)
+        {
+            _camera = Instantiate(_cameraPrefab).GetComponent<CinemachineVirtualCamera>();
+            //_camera = Runner.Spawn(_cameraPrefab).GetComponent<CinemachineVirtualCamera>();
+            _camera.Follow = gameObject.transform;
+        }
         //_camera.Follow = gameObject.transform;
         if (!HasStateAuthority) return;
         ConfigureWeapon();
@@ -27,7 +35,6 @@ public class PlayerController : NetworkBehaviour
 
     private void ConfigureWeapon()
     {
-        //if (!HasStateAuthority) return;
         _weaponManager = WeaponManager.Instance;
         WeaponData weaponData = _weaponManager.GetWeapon();
         _weapon = Runner.Spawn(weaponData.prefab).GetComponent<Weapon>();
@@ -82,11 +89,6 @@ public class PlayerController : NetworkBehaviour
         {
             PlayerDead?.Invoke(this);
         }
-    }
-
-    private bool Validate()
-    {
-        return Runner.IsForward && !IsDead;
     }
     private void DestroyWeapon(PlayerController player)
     {

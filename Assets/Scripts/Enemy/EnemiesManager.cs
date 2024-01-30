@@ -11,12 +11,12 @@ public class EnemiesManager : NetworkBehaviour
     [SerializeField] private int _firstWaveSpawnFrequency;
     [SerializeField] private int _goodsAmount;
     [SerializeField] private List<GameObject> _goodsPrefabs;
-    [SerializeField] private NetworkManager _networkManager;
+    private NetworkManager _networkManager;
 
-    private List<NetworkObject> _simpleZombies;
-    private List<NetworkObject> _updatedZombies;
-    private List<NetworkObject> _skeletons;
-    private List<NetworkObject> _goods;
+    //private List<NetworkObject> _simpleZombies;
+    //private List<NetworkObject> _updatedZombies;
+    //private List<NetworkObject> _skeletons;
+    //private List<NetworkObject> _goods;
     private List<NetworkObject> _players;
 
     private EnemyData _simpleZombieData;
@@ -44,10 +44,10 @@ public class EnemiesManager : NetworkBehaviour
     private void Initialize()
     {
         _players = _networkManager.GetComponent<NetworkManager>().GetSpawnedCharactersList();
-        _simpleZombies = new List<NetworkObject>();
-        _updatedZombies = new List<NetworkObject>();
-        _skeletons = new List<NetworkObject>();
-        _goods = new List<NetworkObject>();
+        //_simpleZombies = new List<NetworkObject>();
+        //_updatedZombies = new List<NetworkObject>();
+        //_skeletons = new List<NetworkObject>();
+        //_goods = new List<NetworkObject>();
         SpawnInFirstWave();
     }
     public void SpawnInFirstWave()

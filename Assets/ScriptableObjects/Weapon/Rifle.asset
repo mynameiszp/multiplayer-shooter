@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Rifle
   m_EditorClassIdentifier: 
   prefab: {fileID: 6180028794676540414, guid: 365dd9e3559592e41a9f9e6ab30d5d0c, type: 3}
-  attackDistance: 20
+  attackDistance: 8
   damage: 7
   attackingEnemyNumber: 1

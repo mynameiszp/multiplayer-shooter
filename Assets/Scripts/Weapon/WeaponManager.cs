@@ -8,14 +8,14 @@ public class WeaponManager : MonoBehaviour
 {
     private GameObject _hostWeapon;
     private GameObject _clientWeapon;
-    public NetworkPrefabRef Bullet { get; set; }
+    public NetworkPrefabRef Bullet { get; private set; }
     private List<Weapon> _weapons = new List<Weapon>();
     private List<WeaponData> _availableWeapons = new List<WeaponData>();
     public static WeaponManager Instance { get; private set; }
 
     private void Awake()
     {
-        if (Instance == null) Instance = this; //temporary
+        if (Instance == null) Instance = this;
     }
 
     public void Init(NetworkPrefabRef bullet, List<WeaponData> weaponDataList)

@@ -42,19 +42,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 8060518321216502343}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 94d48d12bbc32e6448b7458eaf00d770, type: 3}
+  m_Script: {fileID: 11500000, guid: 2522e42c9f42ab44599327dff74f337d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _spawnPositions:
-  - {x: 18, y: 0}
   - {x: -18, y: 0}
+  - {x: 18, y: 0}
   - {x: 0, y: 13}
   - {x: 0, y: -13}
-  - {x: -18, y: -13}
   - {x: 18, y: -13}
-  - {x: 18, y: 13}
+  - {x: -18, y: -13}
   - {x: -18, y: 13}
-  _firstWaveSpawnFrequency: 3
+  - {x: 18, y: 13}
+  _firstWaveSpawnFrequency: 2
   _goodsAmount: 0
   _goodsPrefabs: []
   _networkManager: {fileID: 0}

@@ -8,8 +8,8 @@ public class Weapon : NetworkBehaviour
     [Networked] private TickTimer _attackTimer { get; set; }
     private float _attackFrequency = 0.5f;
     private NetworkPrefabRef _bullet;
-    private List<NetworkObject> _bullets = new List<NetworkObject>();
-    public List<NetworkObject> Bullets => _bullets;
+    private Dictionary<NetworkObject, Vector3> _bullets = new Dictionary<NetworkObject, Vector3>();
+    private Stack<NetworkObject> _bulletsToDestroy = new Stack<NetworkObject>();
     public float Damage {  get; set; }
     public float AttackDistance {  get; set; }
     public float AttackingEnemyNumber {  get; set; }
@@ -26,7 +26,7 @@ public class Weapon : NetworkBehaviour
             Bullet bullet = bulletNetworkObject.GetComponent<Bullet>();
             bullet.Damage = Damage;
             bullet.Disabled += DestroyBullet;
-            _bullets.Add(bulletNetworkObject);
+            _bullets.Add(bulletNetworkObject, bulletNetworkObject.transform.position);
             bulletNetworkObject.transform.rotation = Quaternion.AngleAxis(Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg, Vector3.forward);
         }
     }
@@ -38,9 +38,18 @@ public class Weapon : NetworkBehaviour
     }
     public override void FixedUpdateNetwork()
     {
-        foreach (var item in _bullets)
+        foreach (var bullet in _bullets.Keys)
         {
-            item.transform.Translate(new Vector3(Runner.DeltaTime, 0, 0) * 8);
+            bullet.transform.Translate(new Vector3(Runner.DeltaTime, 0, 0) * 8);
+            if (Vector3.Distance(_bullets[bullet], bullet.transform.position) > AttackDistance)
+            {
+                _bulletsToDestroy.Push(bullet);
+            }
+        }
+        while (_bulletsToDestroy.Count > 0)
+        {
+            var bullet = _bulletsToDestroy.Pop();
+            DestroyBullet(bullet);
         }
     }
 

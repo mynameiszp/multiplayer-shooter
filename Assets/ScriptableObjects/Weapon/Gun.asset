@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Gun
   m_EditorClassIdentifier: 
   prefab: {fileID: 970581634337726613, guid: 4603bcd3cd5771e4e8cb78f838fd9271, type: 3}
-  attackDistance: 10
+  attackDistance: 4
   damage: 10
   attackingEnemyNumber: 1

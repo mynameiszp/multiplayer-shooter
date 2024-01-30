@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1118568198493712465}
-  - component: {fileID: 181764993842533988}
+  - component: {fileID: 850807288066422010}
   - component: {fileID: 7900558962367705689}
   - component: {fileID: 7665327928571543761}
   - component: {fileID: -4449554981096732682}
@@ -37,7 +37,7 @@ Transform:
   - {fileID: 3207795851824536811}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &181764993842533988
+--- !u!114 &850807288066422010
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -46,7 +46,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 3099934003022756047}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: db7b332f6153b3547ae9594bcd4e8b50, type: 3}
+  m_Script: {fileID: 11500000, guid: 345cdbfa19ab4ce458c00a18c5395635, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _networkRigidbody: {fileID: -4449554981096732682}
@@ -68,7 +68,7 @@ MonoBehaviour:
   Flags: 262145
   NestedObjects: []
   NetworkedBehaviours:
-  - {fileID: 181764993842533988}
+  - {fileID: 850807288066422010}
   - {fileID: -4449554981096732682}
 --- !u!50 &7665327928571543761
 Rigidbody2D:

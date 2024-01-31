@@ -70,6 +70,8 @@ public class EnemiesManager : NetworkBehaviour
     {
         Enemy enemy;
         int vectorIndex = Random.Range(0, _spawnPositions.Count);
+        Debug.Log(_networkManager);
+        Debug.Log(_networkManager.Runner);
         NetworkObject enemyNetworkObject = _networkManager.Runner.Spawn(enemyData.prefab, _spawnPositions[vectorIndex]);
         enemy = enemyNetworkObject.GetComponent<Enemy>();
         enemy.Init(_players);

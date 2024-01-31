@@ -9,11 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 31ab7757933ffa4449eecea220261a38, type: 3}
+  m_Script: {fileID: 0}
   m_Name: UpgradedZombie
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyData
   prefab: {fileID: 7562161451846416980, guid: fb2cdd1c3f910d94a884496151312754, type: 3}
   damage: 5
   health: 30
   speed: 0.5
-  attackFrequency: 5
+  attackFrequency: 1.5

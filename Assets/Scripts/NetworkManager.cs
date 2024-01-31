@@ -20,11 +20,18 @@ public class NetworkManager : MonoBehaviour, INetworkRunnerCallbacks
     {
         StartGame();
     }
+    //[ContextMenu("Start Session")]
     async void StartGame()
     {
         _spawnedCharacters = new Dictionary<PlayerRef, NetworkObject>();
         // Create the Fusion runner and let it know that we will be providing user input
-        Runner = gameObject.AddComponent<NetworkRunner>();
+        //Runner = gameObject.AddComponent<NetworkRunner>();
+        Runner = new GameObject()
+        {
+            name = "Runner"
+        }.AddComponent<NetworkRunner>();
+        Runner.gameObject.AddComponent<RunnerEnableVisibility>();
+        Runner.AddCallbacks(this);
         Runner.ProvideInput = true;
 
 

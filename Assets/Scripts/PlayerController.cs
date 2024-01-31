@@ -6,34 +6,43 @@ using UnityEngine;
 
 public class PlayerController : NetworkBehaviour
 {
-    //[SerializeField] private SpriteRenderer renderer;
-    [SerializeField] private GameObject _cameraPrefab;
-    [SerializeField] private float _health;
-    [SerializeField] private NetworkMecanimAnimator _animator;
-    [SerializeField] private float _speed = 3f;
-    [SerializeField] private Rigidbody2D _rigidbody;
-    private WeaponManager _weaponManager;
-    private CinemachineVirtualCamera _camera;
-    private Weapon _weapon;
     [Networked]
     public bool IsDead { get; set; }
     [Networked]
     public Vector3 NetworkedScale { get; set; }
     public Action<PlayerController> PlayerDead;
+    [SerializeField] private Canvas _deathCanvasPrefab;
+    [SerializeField] private GameObject _cameraPrefab;
+    [SerializeField] private float _health;
+    [SerializeField] private NetworkMecanimAnimator _animator;
+    [SerializeField] private float _speed = 3f;
+    [SerializeField] private Rigidbody2D _rigidbody;
+    private Canvas _deathCanvas;
+    private WeaponManager _weaponManager;
+    private CinemachineVirtualCamera _camera;
+    private Weapon _weapon;
 
     public override void Spawned()
     {
         if (HasInputAuthority)
         {
+            _deathCanvas = Instantiate(_deathCanvasPrefab);
+            _deathCanvas.enabled = false;
             _camera = Instantiate(_cameraPrefab).GetComponent<CinemachineVirtualCamera>();
-            //_camera = Runner.Spawn(_cameraPrefab).GetComponent<CinemachineVirtualCamera>();
-            _camera.Follow = gameObject.transform;
+            SetCameraTarget(this);
         }
-        //_camera.Follow = gameObject.transform;
         if (!HasStateAuthority) return;
         ConfigureWeapon();
         PlayerDead += Die;
         PlayerDead += DestroyWeapon;
+    }
+    public void TakeHealth(float damage)
+    {
+        _health -= damage;
+        if (_health <= 0)
+        {
+            PlayerDead?.Invoke(this);
+        }
     }
 
     private void ConfigureWeapon()
@@ -47,6 +56,10 @@ public class PlayerController : NetworkBehaviour
     }
     public override void FixedUpdateNetwork()
     {
+        //if (HasInputAuthority && IsDead)
+        //{
+        //    TurnOnObserverMode();
+        //}
         var input = GetInput(out NetworkInputData data);
         if (!Runner.IsForward) return;
         if (!IsDead)
@@ -73,30 +86,36 @@ public class PlayerController : NetworkBehaviour
         else
         {
             _animator.Animator.SetBool(AnimationVariables.PLAYER_DEAD_ANIMATION, true);
+            if (HasInputAuthority)
+            {
+                TurnOnObserverMode();
+            }
         }
     }
-    public void Run()
+    private void Run()
     {
         _animator.Animator.SetBool(AnimationVariables.PLAYER_RUN_ANIMATION, true);
     }
-    public void Idle()
+    private void Idle()
     {
         _animator.Animator.SetBool(AnimationVariables.PLAYER_RUN_ANIMATION, false);
     }
-    public void Die(PlayerController player)
+    private void Die(PlayerController player)
     {
         IsDead = true;
-    }
-    public void TakeHealth(float damage)
-    {
-        _health -= damage;
-        if (_health <= 0)
-        {
-            PlayerDead?.Invoke(this);
-        }
     }
     private void DestroyWeapon(PlayerController player)
     {
         Runner.Despawn(_weapon.GetComponent<NetworkObject>());
+    }
+
+    private void TurnOnObserverMode()
+    {
+        _deathCanvas.enabled = true;
+    }
+
+    public void SetCameraTarget(PlayerController player)
+    {
+        _camera.Follow = player.transform;
     }
 }

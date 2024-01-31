@@ -65,7 +65,6 @@ public class Enemy : NetworkBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (!HasStateAuthority) return;
         if (collision.gameObject.TryGetComponent(out PlayerController player))
         {
             Attack(player);
@@ -75,7 +74,6 @@ public class Enemy : NetworkBehaviour
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        if (!HasStateAuthority) return;
         if (_attackTimer.Expired(Runner))
         {
             if (collision.gameObject.TryGetComponent(out PlayerController player))
@@ -87,7 +85,6 @@ public class Enemy : NetworkBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (!HasStateAuthority) return;
         if (collision.gameObject.TryGetComponent(out PlayerController player))
         {
             _attackTimer = TickTimer.None;

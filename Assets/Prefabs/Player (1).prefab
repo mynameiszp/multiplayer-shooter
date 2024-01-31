@@ -249,13 +249,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7dcc7d7d894323e4680f9e0221061957, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _IsDead: 0
+  _NetworkedScale: {x: 0, y: 0, z: 0}
+  _deathCanvasPrefab: {fileID: 1395328813307708812, guid: 06e0c35cf6340774686d8f3e57ed5a10, type: 3}
   _cameraPrefab: {fileID: 6842205076582997682, guid: 68a59a3ce1f4895409d765cf599c48ed, type: 3}
   _health: 10
   _animator: {fileID: 595095831659227757}
   _speed: 3
   _rigidbody: {fileID: 8219272864691495592}
-  _IsDead: 0
-  _NetworkedScale: {x: 0, y: 0, z: 0}
 --- !u!50 &8219272864691495592
 Rigidbody2D:
   serializedVersion: 4

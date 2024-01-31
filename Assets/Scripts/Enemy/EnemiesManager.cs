@@ -70,8 +70,6 @@ public class EnemiesManager : NetworkBehaviour
     {
         Enemy enemy;
         int vectorIndex = Random.Range(0, _spawnPositions.Count);
-        Debug.Log(_networkManager);
-        Debug.Log(_networkManager.Runner);
         NetworkObject enemyNetworkObject = _networkManager.Runner.Spawn(enemyData.prefab, _spawnPositions[vectorIndex]);
         enemy = enemyNetworkObject.GetComponent<Enemy>();
         enemy.Init(_players);
@@ -81,68 +79,4 @@ public class EnemiesManager : NetworkBehaviour
         enemy.Health = enemyData.health;
         return enemyNetworkObject;
     }
-
-    //public void FixedUpdate()
-    //{
-    //    if (_manager.Runner.IsServer && _manager.GetComponent<NetworkManager>().GetSpawnedCharactersList().Count == 2)
-    //    {
-    //        _players = _manager.GetComponent<NetworkManager>().GetSpawnedCharactersList();
-    //        SpawnInFirstWave();
-    //    }
-    //}
-    //void Start()
-    //{
-    //        GameObject temp;
-    //    for (int i = 0; i < objectsAmount; i++)
-    //    {
-    //        temp = Instantiate(objectPrefabs[Random.Range(0, objectPrefabs.Count)]);
-    //        temp.AddComponent<ObstacleMovement>();
-    //        temp.SetActive(false);
-    //        pooledObjects.Add(temp);
-    //    }
-    //}
-
-    //public int GetPooledObjectIndex()
-    //{
-    //    for (int i = 0; i < pooledObjects.Count; i++)
-    //    {
-    //        if (!pooledObjects[i].activeInHierarchy)
-    //        {
-    //            return i;
-    //        }
-    //    }
-    //    return -1;
-    //}
-
-    //public List<GameObject> GetPooledObjects()
-    //{
-    //    return pooledObjects;
-    //}
-
-    //public GameObject GetPreviousObject(int currentIndex)
-    //{
-    //    if (currentIndex == 0) return pooledObjects[pooledObjects.Count - 1];
-    //    if (currentIndex < pooledObjects.Count) return pooledObjects[currentIndex - 1];
-    //    return null;
-    //}
-
-    //public void DeactivateObject(GameObject obj)
-    //{
-    //    if (pooledObjects.Contains(obj)) obj.SetActive(false);
-    //}
-    //public void DeactivateAll()
-    //{
-    //    foreach (GameObject obj in pooledObjects)
-    //    {
-    //        obj.SetActive(false);
-    //    }
-    //}
-
-    //public void ActivateAll()
-    //{
-    //    foreach (GameObject obj in pooledObjects)
-    //    {
-    //        obj.SetActive(false);
-    //    }
-    //}
 }

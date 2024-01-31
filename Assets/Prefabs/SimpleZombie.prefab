@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: -1308038848290144033}
   - component: {fileID: 8919170437074253688}
   - component: {fileID: 5603913500668576963}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: SimpleZombie
   m_TagString: Enemy
   m_Icon: {fileID: 0}

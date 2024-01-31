@@ -120,7 +120,7 @@ GameObject:
   - component: {fileID: 5940549514039024375}
   - component: {fileID: 399819452583224512}
   - component: {fileID: 1807136543866611824}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: UpgradedZombie
   m_TagString: Enemy
   m_Icon: {fileID: 0}

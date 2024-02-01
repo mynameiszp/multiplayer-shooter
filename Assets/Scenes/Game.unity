@@ -8667,6 +8667,50 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 4, y: 28}
   m_EdgeRadius: 0
+--- !u!1 &160002059
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 160002060}
+  - component: {fileID: 160002061}
+  m_Layer: 0
+  m_Name: CameraManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &160002060
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 160002059}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 3.1281695, y: 0.003212926, z: -0.25945663}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &160002061
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 160002059}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8dcd82039c49ebd4795b804efed8da29, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &236199275
 GameObject:
   m_ObjectHideFlags: 0
@@ -8809,6 +8853,14 @@ PrefabInstance:
     - target: {fileID: 2223187732415774525, guid: 91aac4ed6842e0645b3a76b24514653d, type: 3}
       propertyPath: _enemiesManager.RawGuidValue.Array.data[1]
       value: -5262724702649615272
+      objectReference: {fileID: 0}
+    - target: {fileID: 2223187732415774525, guid: 91aac4ed6842e0645b3a76b24514653d, type: 3}
+      propertyPath: _wavesTimerPrefab.RawGuidValue.Array.data[0]
+      value: -4275624711171955561
+      objectReference: {fileID: 0}
+    - target: {fileID: 2223187732415774525, guid: 91aac4ed6842e0645b3a76b24514653d, type: 3}
+      propertyPath: _wavesTimerPrefab.RawGuidValue.Array.data[1]
+      value: -2430506577301850902
       objectReference: {fileID: 0}
     - target: {fileID: 2223187732415774525, guid: 91aac4ed6842e0645b3a76b24514653d, type: 3}
       propertyPath: _enemiesManagerPrefab.RawGuidValue.Array.data[0]
@@ -9219,7 +9271,10 @@ MonoBehaviour:
   _networkManager: {fileID: 304026626}
   _bulletPrefab:
     RawGuidValue: c2ca7e1db9c4ea14d934b3764221200c
-  _wavesData: {fileID: 11400000, guid: bfb177f5b28b2974e9be483b9665921c, type: 2}
+  _firstWaveData: {fileID: 11400000, guid: 6ef0c34b3294b6f439949e4f32957773, type: 2}
+  _secondWaveData: {fileID: 11400000, guid: 712f04455ba3b92408a183eef61e7a92, type: 2}
+  _thirdWaveData: {fileID: 11400000, guid: f63deb73ea1fc1241913250ea83da6c6, type: 2}
+  _breakWaveData: {fileID: 11400000, guid: c3ffc311aafa6a84091e2bbcab941187, type: 2}
   _simpleZombieData: {fileID: 11400000, guid: d8605c63bf573a24baa789e4bd2598bf, type: 2}
   _upgradedZombieData: {fileID: 11400000, guid: 3f699fbb8350efa48aeb66d2e6ebfd6c, type: 2}
   _skeletonData: {fileID: 11400000, guid: f7203b9d4c2ae2448acaa028ecaec32f, type: 2}
@@ -9587,3 +9642,4 @@ SceneRoots:
   - {fileID: 506504745}
   - {fileID: 296887592}
   - {fileID: 236199279}
+  - {fileID: 160002060}

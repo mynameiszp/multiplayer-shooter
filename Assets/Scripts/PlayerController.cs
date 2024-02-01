@@ -6,10 +6,8 @@ using UnityEngine;
 
 public class PlayerController : NetworkBehaviour
 {
-    [Networked]
-    public bool IsDead { get; set; }
-    [Networked]
-    public Vector3 NetworkedScale { get; set; }
+    [Networked] public bool IsDead { get; set; }
+    [Networked] public Vector3 NetworkedScale { get; set; }
     public Action<PlayerController> PlayerDead;
     [SerializeField] private Canvas _deathCanvasPrefab;
     [SerializeField] private GameObject _cameraPrefab;

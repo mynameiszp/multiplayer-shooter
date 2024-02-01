@@ -13,14 +13,14 @@ public class Enemy : NetworkBehaviour
     [Networked] private TickTimer _attackTimer { get; set; }
     [SerializeField] private NetworkRigidbody2D _networkRigidbody;
     [SerializeField] private Rigidbody2D _rigidbody;
-    private NetworkObject _targetPlayer;
-    private List<NetworkObject> _players;
-    public void Init(List<NetworkObject> players)
+    private PlayerController _targetPlayer;
+    private List<PlayerController> _players;
+    public void Init(List<PlayerController> players)
     {
         _players = players;
         foreach (var player in _players)
         {
-            player.GetComponent<PlayerController>().PlayerDead += ForgetPlayer;
+            player.PlayerDead += ForgetPlayer;
         }
     }
     public override void FixedUpdateNetwork()
@@ -93,6 +93,6 @@ public class Enemy : NetworkBehaviour
 
     private void ForgetPlayer(PlayerController player)
     {
-        _players.Remove(player.gameObject.GetComponent<NetworkObject>());
+        _players.Remove(player);
     }
 }

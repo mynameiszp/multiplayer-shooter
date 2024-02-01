@@ -10,9 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b213723289ccb7d45b56266e59b09713, type: 3}
-  m_Name: WavesData
+  m_Name: Break
   m_EditorClassIdentifier: 
-  firstWaveDuration: 60
-  secondWaveDuration: 180
-  thirdWaveDuration: 300
-  breakDuration: 30
+  waveDuration: 15
+  enemies: []

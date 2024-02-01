@@ -11,7 +11,11 @@ public class NetworkManager : MonoBehaviour, INetworkRunnerCallbacks
     [SerializeField] private FixedJoystick _shotJoystick;
     [SerializeField] private NetworkPrefabRef _playerPrefab;
     [SerializeField] private NetworkPrefabRef _enemiesManagerPrefab;
+    [SerializeField] private NetworkPrefabRef _wavesTimerPrefab;
+    //[SerializeField] private NetworkPrefabRef _cameraManagerPrefab;
     private NetworkObject _enemiesManager;
+    private WavesTimer _wavesTimer;
+    //private NetworkObject _cameraManager;
     public Dictionary<PlayerRef, NetworkObject> _spawnedCharacters { get; set; }
     public NetworkRunner Runner { get; set; }
     public Action PlayersPresent;
@@ -65,6 +69,7 @@ public class NetworkManager : MonoBehaviour, INetworkRunnerCallbacks
             if(_spawnedCharacters.Count == 2)
             {
                 _enemiesManager = runner.Spawn(_enemiesManagerPrefab);
+                _wavesTimer = runner.Spawn(_wavesTimerPrefab).GetComponent<WavesTimer>();
                 PlayersPresent?.Invoke();
             }
         }
@@ -114,5 +119,9 @@ public class NetworkManager : MonoBehaviour, INetworkRunnerCallbacks
     public NetworkObject GetEnemiesManager()
     {
         return _enemiesManager;
+    }    
+    public WavesTimer GetWavesTimer()
+    {
+        return _wavesTimer;
     }
 }

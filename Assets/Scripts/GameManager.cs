@@ -2,6 +2,7 @@ using Fusion;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class GameManager : MonoBehaviour
 {
@@ -9,6 +10,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private NetworkManager _networkManager;
     //[SerializeField] private CameraManager _cameraManager;
     [SerializeField] private NetworkPrefabRef _bulletPrefab;
+    [SerializeField] private TMP_Text _timerText;
     [Header("Waves Characteristics")]
     [Space]
     [SerializeField] private WavesData _firstWaveData;
@@ -56,6 +58,6 @@ public class GameManager : MonoBehaviour
         _enemiesManager.GetComponent<EnemiesManager>().Init(_networkManager, _wavesData, new List<EnemyData>() { _simpleZombieData, _upgradedZombieData, _skeletonData });
         //_cameraManager.Init(_networkManager);
         _timer = _networkManager.GetWavesTimer();
-        _timer.Init(_wavesData);
+        _timer.Init(_timerText, _wavesData);
     }
 }

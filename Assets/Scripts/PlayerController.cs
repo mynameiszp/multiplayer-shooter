@@ -16,12 +16,14 @@ public class PlayerController : NetworkBehaviour
     [SerializeField] private float _speed = 3f;
     [SerializeField] private Rigidbody2D _rigidbody;
     private Canvas _deathCanvas;
+    private float _initialHealth;
     private WeaponManager _weaponManager;
     private CinemachineVirtualCamera _camera;
     private Weapon _weapon;
 
     public override void Spawned()
     {
+        _initialHealth = _health;
         if (HasInputAuthority)
         {
             _deathCanvas = Instantiate(_deathCanvasPrefab);
@@ -115,5 +117,9 @@ public class PlayerController : NetworkBehaviour
     public void SetCameraTarget(PlayerController player)
     {
         _camera.Follow = player.transform;
+    }
+    public void RecoverHealth()
+    {
+        _health = _initialHealth;
     }
 }

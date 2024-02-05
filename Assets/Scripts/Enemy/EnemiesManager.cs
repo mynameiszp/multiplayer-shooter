@@ -103,7 +103,13 @@ public class EnemiesManager : NetworkBehaviour
         enemy.AttackFrequency = enemyData.attackFrequency;
         enemy.Speed = enemyData.speed;
         enemy.Health = enemyData.health;
+        enemy.OnDestroy += RemoveFromList;
         _enemies.Add(enemyNetworkObject);
         return enemyNetworkObject;
+    }
+
+    private void RemoveFromList(Enemy enemy)
+    {
+        _enemies.Remove(enemy.GetComponent<NetworkObject>());
     }
 }

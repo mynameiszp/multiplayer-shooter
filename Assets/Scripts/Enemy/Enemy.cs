@@ -1,5 +1,6 @@
 using Fusion;
 using Fusion.Addons.Physics;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using Zenject.SpaceFighter;
@@ -15,6 +16,8 @@ public class Enemy : NetworkBehaviour
     [SerializeField] private Rigidbody2D _rigidbody;
     private PlayerController _targetPlayer;
     private List<PlayerController> _players;
+
+    public Action<Enemy> OnDestroy;
     public void Init(List<PlayerController> players)
     {
         _players = players;
@@ -94,5 +97,11 @@ public class Enemy : NetworkBehaviour
     private void ForgetPlayer(PlayerController player)
     {
         _players.Remove(player);
+    }
+
+    public void Destroy()
+    {
+        Runner.Despawn(GetComponent<NetworkObject>());
+        OnDestroy?.Invoke(this);
     }
 }

@@ -5,24 +5,28 @@ using UnityEngine;
 
 public class Weapon : NetworkBehaviour
 {
+    [SerializeField] private int _bulletCapacity;
     [Networked] private TickTimer _attackTimer { get; set; }
     private float _attackFrequency = 0.5f;
     private NetworkPrefabRef _bullet;
     private Dictionary<NetworkObject, Vector3> _bullets = new Dictionary<NetworkObject, Vector3>();
     private Stack<NetworkObject> _bulletsToDestroy = new Stack<NetworkObject>();
-    public float Damage {  get; set; }
-    public float AttackDistance {  get; set; }
-    public float AttackingEnemyNumber {  get; set; }
+    private int _bulletsAmount;
+    public float Damage { get; set; }
+    public float AttackDistance { get; set; }
+    public float AttackingEnemyNumber { get; set; }
     public override void Spawned()
     {
+        _bulletsAmount = _bulletCapacity;
         _attackTimer = TickTimer.CreateFromSeconds(Runner, _attackFrequency);
     }
     public void Attack(Vector2 direction)
     {
-        if (_attackTimer.Expired(Runner) && direction.sqrMagnitude > 0)
+        if (_attackTimer.Expired(Runner) && direction.sqrMagnitude > 0 && _bulletsAmount > 0)
         {
             _attackTimer = TickTimer.CreateFromSeconds(Runner, _attackFrequency);
             NetworkObject bulletNetworkObject = Runner.Spawn(_bullet, gameObject.transform.position);
+            _bulletsAmount--;
             Bullet bullet = bulletNetworkObject.GetComponent<Bullet>();
             bullet.Damage = Damage;
             bullet.Disabled += DestroyBullet;
@@ -59,5 +63,10 @@ public class Weapon : NetworkBehaviour
         Damage = harm;
         AttackDistance = attackDistance;
         AttackingEnemyNumber = attackingEnemyNumber;
+    }
+
+    public void RefillBullets()
+    {
+        _bulletsAmount = _bulletCapacity;
     }
 }

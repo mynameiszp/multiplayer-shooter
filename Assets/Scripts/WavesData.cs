@@ -1,3 +1,4 @@
+using Fusion;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,4 +7,5 @@ public class WavesData: ScriptableObject
 {
     public float waveDuration;
     public List<EnemyData> enemies;
+    public List<NetworkPrefabRef> items;
 }

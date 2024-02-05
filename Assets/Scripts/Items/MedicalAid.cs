@@ -1,8 +1,9 @@
+using Fusion;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MedicalAid : MonoBehaviour
+public class MedicalAid : NetworkBehaviour
 {
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -10,5 +11,6 @@ public class MedicalAid : MonoBehaviour
         {
             player.RecoverHealth();
         }
+        Runner.Despawn(GetComponent<NetworkObject>());
     }
 }

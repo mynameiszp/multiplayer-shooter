@@ -19,16 +19,10 @@ public class EnemiesManager : NetworkBehaviour
     //private List<NetworkObject> _goods;
     private List<PlayerController> _players = new List<PlayerController>();
     private WavesTimer _wavesTimer;
-    private EnemyData _simpleZombieData;
-    private EnemyData _upgradedZombieData;
-    private EnemyData _skeletonData;
     private List<WavesData> _wavesData;
     private WavesData _waveData;
     private bool _waveStarted;
 
-    public override void Spawned()
-    {
-    }
     public void Init(NetworkManager networkManager, List<WavesData> wavesDataList, List<EnemyData> enemyDataList)
     {
         //state authority?
@@ -37,12 +31,6 @@ public class EnemiesManager : NetworkBehaviour
         _wavesTimer.OnWaveStart += StartWave;
         _wavesData = wavesDataList;
         _networkManager = networkManager;
-        if (enemyDataList.Count == 3)
-        {
-            _simpleZombieData = enemyDataList[0];
-            _upgradedZombieData = enemyDataList[1];
-            _skeletonData = enemyDataList[2];
-        }
         Initialize();
     }
 

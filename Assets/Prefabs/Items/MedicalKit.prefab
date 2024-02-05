@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 6277547401762442173}
   - component: {fileID: 4485062571818857611}
   - component: {fileID: 416201746487095908}
+  - component: {fileID: 4264831374308705035}
   m_Layer: 0
   m_Name: MedicalKit
   m_TagString: Untagged
@@ -51,7 +52,9 @@ MonoBehaviour:
   ObjectInterest: 1
   Flags: 262145
   NestedObjects: []
-  NetworkedBehaviours: []
+  NetworkedBehaviours:
+  - {fileID: 416201746487095908}
+  - {fileID: 4264831374308705035}
 --- !u!61 &4485062571818857611
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -109,6 +112,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5940ce7587750f428a2517f25826120, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &4264831374308705035
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1798954439729109244}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 158639473, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SyncScale: 0
+  SyncParent: 0
+  _autoAOIOverride: 1
+  DisableSharedModeInterpolation: 0
 --- !u!1 &5310451496529927912
 GameObject:
   m_ObjectHideFlags: 0
@@ -179,9 +198,9 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingLayerID: 1615839985
+  m_SortingLayer: -1
+  m_SortingOrder: 1
   m_Sprite: {fileID: 934571490, guid: 0d5e657ee5a074e4baa53d5b248a01d2, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0

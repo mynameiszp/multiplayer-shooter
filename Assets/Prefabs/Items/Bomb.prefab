@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3044656408578682342}
   - component: {fileID: 6992037354291755255}
   - component: {fileID: 750402562790762809}
+  - component: {fileID: -6502497432746882858}
   m_Layer: 0
   m_Name: Bomb
   m_TagString: Untagged
@@ -53,6 +54,7 @@ MonoBehaviour:
   NestedObjects: []
   NetworkedBehaviours:
   - {fileID: 750402562790762809}
+  - {fileID: -6502497432746882858}
 --- !u!58 &6992037354291755255
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -101,6 +103,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _radius: 5
+--- !u!114 &-6502497432746882858
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2396857557027697179}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 158639473, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SyncScale: 0
+  SyncParent: 0
+  _autoAOIOverride: 1
+  DisableSharedModeInterpolation: 0
 --- !u!1 &4819160792153151334
 GameObject:
   m_ObjectHideFlags: 0
@@ -171,9 +189,9 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingLayerID: 1615839985
+  m_SortingLayer: -1
+  m_SortingOrder: 1
   m_Sprite: {fileID: 154122315, guid: 0d5e657ee5a074e4baa53d5b248a01d2, type: 3}
   m_Color: {r: 0.735849, g: 0.47798568, b: 0.3100747, a: 1}
   m_FlipX: 0

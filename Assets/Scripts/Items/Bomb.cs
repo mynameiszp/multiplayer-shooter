@@ -11,7 +11,6 @@ public class Bomb : NetworkBehaviour
     {
         _center = transform.position;
         Collider2D[] objects = Physics2D.OverlapCircleAll(_center, _radius);
-        Debug.Log(objects.Length);
         foreach (var obj in objects)
         {
             if (obj.TryGetComponent(out Enemy enemy))
@@ -19,5 +18,6 @@ public class Bomb : NetworkBehaviour
                 enemy.Destroy();
             }
         }
+        Runner.Despawn(GetComponent<NetworkObject>());
     }
 }

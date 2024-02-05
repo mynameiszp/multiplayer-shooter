@@ -8863,6 +8863,14 @@ PrefabInstance:
       value: -2430506577301850902
       objectReference: {fileID: 0}
     - target: {fileID: 2223187732415774525, guid: 91aac4ed6842e0645b3a76b24514653d, type: 3}
+      propertyPath: _itemsManagerPrefab.RawGuidValue.Array.data[0]
+      value: -7759307550080622158
+      objectReference: {fileID: 0}
+    - target: {fileID: 2223187732415774525, guid: 91aac4ed6842e0645b3a76b24514653d, type: 3}
+      propertyPath: _itemsManagerPrefab.RawGuidValue.Array.data[1]
+      value: -2177832608856247046
+      objectReference: {fileID: 0}
+    - target: {fileID: 2223187732415774525, guid: 91aac4ed6842e0645b3a76b24514653d, type: 3}
       propertyPath: _enemiesManagerPrefab.RawGuidValue.Array.data[0]
       value: -3141530023271535504
       objectReference: {fileID: 0}

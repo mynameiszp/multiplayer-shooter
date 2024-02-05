@@ -29,6 +29,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private WeaponData _rifleData;
 
     private NetworkObject _enemiesManager;
+    private ItemsManager _itemsManager;
     private WavesTimer _timer;
     private List<WavesData> _wavesData;
     
@@ -59,5 +60,7 @@ public class GameManager : MonoBehaviour
         //_cameraManager.Init(_networkManager);
         _timer = _networkManager.GetWavesTimer();
         _timer.Init(_timerText, _wavesData);
+        _itemsManager = _networkManager.GetItemsManager();
+        _itemsManager.Init(_networkManager);
     }
 }

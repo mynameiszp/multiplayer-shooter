@@ -1,8 +1,9 @@
+using Fusion;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BulletsBox : MonoBehaviour
+public class BulletsBox : NetworkBehaviour
 {
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -14,5 +15,6 @@ public class BulletsBox : MonoBehaviour
                 weapon.RefillBullets();
             }
         }
+        Runner.Despawn(GetComponent<NetworkObject>());
     }
 }

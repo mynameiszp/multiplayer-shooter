@@ -9,15 +9,15 @@ public class WavesTimer : NetworkBehaviour
 {
     [Networked] public TickTimer WaveTimer { get; private set; }
     [Networked] public TickTimer BreakTimer { get; private set; }
+    public int WaveNumber => _waveNumber;
+    public int AmountOfBreaks => _amountOfBreaks;
+    public Action OnBreak;
+    public Action<WavesData> OnWaveStart;
     private int _amountOfBreaks;
     private int _waveNumber;
     private TMP_Text _timerText;
     private List<WavesData> _wavesData;
     private TickTimer _timer = TickTimer.None;
-    public int WaveNumber => _waveNumber;
-    public int AmountOfBreaks => _amountOfBreaks;
-    public Action OnBreak;
-    public Action<WavesData> OnWaveStart;
     public void Init(TMP_Text timerText, List<WavesData> wavesData)
     {
         _timerText = timerText;
